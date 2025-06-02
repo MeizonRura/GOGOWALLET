@@ -68,13 +68,13 @@
             </div>
 
             <!-- Transfer Valas -->
-            <div class="action-card">
+            <a href="{{ route('transfer-valas.index') }}" class="action-card hover:shadow-lg transition">
                 <div class="action-icon valas-icon">
                     <i class="fas fa-globe-asia text-2xl"></i>
                 </div>
                 <h3 class="action-title">Transfer Valas</h3>
                 <p class="action-description">Kirim mata uang asing</p>
-            </div>
+            </a>
 
             <!-- Payment -->
             <div class="action-card">

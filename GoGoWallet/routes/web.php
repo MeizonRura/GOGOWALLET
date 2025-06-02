@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ValasController;
 
 // Default route redirecting to register
 Route::get('/', function () {
@@ -23,5 +24,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/transfer-valas', [ValasController::class, 'index'])->name('transfer-valas.index');
+    Route::get('/transfer-valas/create', [ValasController::class, 'create'])->name('transfer-valas.create');
+    Route::post('/transfer-valas', [ValasController::class, 'store'])->name('transfer-valas.store');
+});
 
 
