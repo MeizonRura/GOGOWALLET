@@ -1,0 +1,125 @@
+/* Font dan Reset Dasar */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fafb;
+    margin: 0;
+    padding: 0;
+    color: #1f2937;
+}
+
+/* Container Utama */
+.transfer-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+}
+
+/* Header */
+.transfer-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+.transfer-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.back-button {
+    color: #4b5563;
+    font-size: 1.25rem;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    color: #2563eb;
+}
+
+/* Card */
+.transfer-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 1.5rem;
+}
+
+/* Tombol */
+.submit-button {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #059669;
+}
+
+/* Tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+thead {
+    background-color: #f1f5f9;
+    color: #1f2937;
+}
+
+th, td {
+    padding: 14px 16px;
+    text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+td {
+    vertical-align: middle;
+}
+
+tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+tr:hover {
+    background-color: #eef2ff;
+}
+
+/* Status Style */
+td span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+}
+
+td span i {
+    font-size: 0.9rem;
+}
+
+/* No Data */
+.no-data {
+    text-align: center;
+    color: #9ca3af;
+    padding: 2rem 0;
+}
+
+.no-data i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #cbd5e1;
+}

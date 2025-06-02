@@ -77,13 +77,13 @@
             </div>
 
             <!-- Payment -->
-            <div class="action-card">
+            <a href="{{ route('pembayaran.va') }}" class="action-card hover:bg-blue-50 transition">
                 <div class="action-icon payment-icon">
                     <i class="fas fa-credit-card text-2xl"></i>
                 </div>
                 <h3 class="action-title">Pembayaran</h3>
                 <p class="action-description">Bayar tagihan & layanan</p>
-            </div>
+            </a>
         </div>
 
         <!-- Bottom Row: Billing and Loan (Centered) -->
@@ -150,6 +150,8 @@
             </div>
         @endif
     </div>
+
+
 </main>
 </body>
 </html>
