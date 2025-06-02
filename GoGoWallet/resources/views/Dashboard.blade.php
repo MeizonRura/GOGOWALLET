@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoGoWallet Dashboard</title>
+    <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -33,23 +33,31 @@
         <!-- User Profile Card -->
         <div class="profile-card">
             <div class="profile-wrapper">
-                @if(auth()->user()->profile_photo && file_exists(public_path('storage/' . auth()->user()->profile_photo)))
-                    <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" alt="Profile" class="profile-image">
+                @if(auth()->user()->profile_photo && Storage::disk('public')->exists(auth()->user()->profile_photo))
+                    <img src="{{ Storage::url(auth()->user()->profile_photo) }}" 
+                         alt="{{ auth()->user()->name }}" 
+                         class="profile-image">
                 @else
                     <div class="profile-image flex items-center justify-center bg-gray-200">
                         <i class="fas fa-user text-gray-400 text-2xl"></i>
                     </div>
                 @endif
                 <div class="profile-info">
-                    <p class="welcome-text">Hi, {{ auth()->user()->name }}</p>
+                    <p class="welcome-text">Hii, {{ auth()->user()->name }}</p>
                     <p class="account-number">{{ auth()->user()->account_number }}</p>
                 </div>
             </div>
         </div>
         <div class="balance-card">
             <div class="balance-wrapper">
-                <p class="balance-label">Saldo Anda</p>
-                <p class="balance-amount">Rp 5,000,000</p>
+                <div class="balance-info">
+                    <p class="balance-label">Saldo Anda</p>
+                    <p class="balance-amount">Rp {{ number_format(auth()->user()->balance, 0, ',', '.') }}</p>
+                </div>
+                <button onclick="window.location.href='{{ route('topup') }}'" class="topup-button">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Top Up Saldo</span>
+                </button>
             </div>
         </div>
     </div>
@@ -59,7 +67,7 @@
         <!-- Top Row: Transfer Rupiah, Transfer Valas, and Payment -->
         <div class="quick-actions-row">
             <!-- Transfer Rupiah -->
-            <div class="action-card">
+            <div class="action-card" onclick="window.location.href='{{ route('transfer') }}'">
                 <div class="action-icon transfer-icon">
                     <i class="fas fa-paper-plane text-2xl"></i>
                 </div>
@@ -150,6 +158,12 @@
             </div>
         @endif
     </div>
+
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 </main>
 </body>
 </html>

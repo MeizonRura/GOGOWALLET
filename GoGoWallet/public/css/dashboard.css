@@ -62,21 +62,21 @@
 .profile-wrapper {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.5rem; /* Increased gap */
+    padding: 1.5rem; /* Increased padding */
 }
 
 .profile-image {
-    width: 70px;
-    height: 70px;
+    width: 80px; /* Increased from 60px */
+    height: 80px; /* Increased from 60px */
     border-radius: 50%;
-    border: 3px solid #00bd6f;
     object-fit: cover;
+    border: 3px solid #ffffff; /* Increased border width */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Enhanced shadow */
 }
 
 .profile-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    flex: 1;
 }
 
 .welcome-text {
@@ -99,15 +99,56 @@
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.balance-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.balance-info {
+    flex: 1;
+}
+
+.balance-label {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-bottom: 0.5rem;
 }
 
 .balance-amount {
     font-size: 2.5rem;
     font-weight: 700;
     color: #00bd6f;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.topup-button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.5rem;
+    background: linear-gradient(145deg, #00bd6f 0%, #009d5c 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.938rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,189,111,0.2);
+}
+
+.topup-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,189,111,0.3);
+}
+
+.topup-button i {
+    font-size: 1.125rem;
 }
 
 /* Quick Actions Grid */
@@ -361,6 +402,31 @@
     color: #64748b;
 }
 
+/* Alert styles */
+.alert {
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    animation: slideIn 0.3s ease;
+}
+
+.alert-success {
+    background: #f0fdf4;
+    border: 1px solid #00bd6f;
+    color: #00bd6f;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 /* Responsive design */
 @media (max-width: 640px) {
     .transactions {
@@ -403,6 +469,13 @@
     .profile-wrapper {
         flex-direction: column;
         text-align: center;
+        padding: 1.5rem;
+    }
+
+    .profile-image {
+        width: 100px; /* Even larger on mobile */
+        height: 100px; /* Even larger on mobile */
+        margin-bottom: 1rem;
     }
 
     .quick-actions {
@@ -419,5 +492,20 @@
     .quick-actions-row-bottom {
         grid-template-columns: 1fr;
         width: 100%;
+    }
+
+    .balance-wrapper {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .balance-amount {
+        font-size: 2rem;
+    }
+
+    .topup-button {
+        width: 100%;
+        justify-content: center;
     }
 }

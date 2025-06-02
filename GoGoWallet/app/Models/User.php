@@ -17,7 +17,8 @@ class User extends Authenticatable
         'password',
         'date_of_birth',
         'profile_photo',
-        'account_number'
+        'account_number',
+        'balance' // tambahkan ini
     ];
 
     protected $hidden = [
@@ -47,5 +48,15 @@ class User extends Authenticatable
         } while (self::where('account_number', $number)->exists());
 
         return $number;
+    }
+
+    public function sentTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'sender_id');
+    }
+
+    public function receivedTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'recipient_id');
     }
 }

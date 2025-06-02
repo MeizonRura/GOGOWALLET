@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TransferController;
+use App\Http\Controllers\TopUpController;
 
 // Default route redirecting to register
 Route::get('/', function () {
@@ -21,6 +23,10 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/transfer', [TransferController::class, 'show'])->name('transfer');
+    Route::post('/transfer/process', [TransferController::class, 'process'])->name('transfer.process');
+    Route::get('/topup', [TopUpController::class, 'show'])->name('topup');
+    Route::post('/topup/process', [TopUpController::class, 'process'])->name('topup.process');
 });
 
 
