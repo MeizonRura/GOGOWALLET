@@ -18,9 +18,12 @@
     @else 
         <span class="text-xl font-bold">GoWallet</span>
     @endif
-    <button class="logout-button">
-        <i class="fas fa-door-open text-xl"></i>
-    </button>
+    <form method="POST" action="{{ route('logout') }}" class="inline">
+        @csrf
+        <button type="submit" class="logout-button">
+            <i class="fas fa-door-open text-xl"></i>
+        </button>
+    </form>
 </div>
 
 <!-- Main Content -->
@@ -30,16 +33,16 @@
         <!-- User Profile Card -->
         <div class="profile-card">
             <div class="profile-wrapper">
-                @if(file_exists(public_path('images/default-avatar.png')))
-                    <img src="{{ asset('images/default-avatar.png') }}" alt="Profile" class="profile-image">
+                @if(auth()->user()->profile_photo && file_exists(public_path('storage/' . auth()->user()->profile_photo)))
+                    <img src="{{ asset('storage/' . auth()->user()->profile_photo) }}" alt="Profile" class="profile-image">
                 @else
                     <div class="profile-image flex items-center justify-center bg-gray-200">
                         <i class="fas fa-user text-gray-400 text-2xl"></i>
                     </div>
                 @endif
                 <div class="profile-info">
-                    <p class="welcome-text">Hi, User Name</p>
-                    <p class="account-number">1234 5678 9012 3456</p>
+                    <p class="welcome-text">Hi, {{ auth()->user()->name }}</p>
+                    <p class="account-number">{{ auth()->user()->account_number }}</p>
                 </div>
             </div>
         </div>
@@ -108,20 +111,44 @@
     <!-- Transaction List -->
     <div class="transactions">
         <h2 class="transactions-title">Transaksi Terakhir</h2>
-        <div class="transaction-list">
-            <div class="transaction-item">
-                <div class="transaction-info">
-                    <div class="transaction-icon bg-blue-100">
-                        <i class="fas fa-arrow-right text-blue-600"></i>
+        @if(count($transactions ?? []) > 0)
+            <div class="transaction-list">
+                <!-- Example Credit Transaction -->
+                <div class="transaction-item">
+                    <div class="transaction-info">
+                        <div class="transaction-icon credit">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <span class="transaction-name">Terima dari Ahmad</span>
+                            <span class="transaction-date">Hari ini, 15:30</span>
+                        </div>
                     </div>
-                    <div class="transaction-details">
-                        <span class="transaction-name">Transfer ke Budi Santoso</span>
-                        <span class="transaction-date">Hari ini, 14:30</span>
-                    </div>
+                    <span class="transaction-amount amount-credit">+Rp 1.000.000</span>
                 </div>
-                <span class="transaction-amount amount-debit">-Rp 500.000</span>
+
+                <!-- Example Debit Transaction -->
+                <div class="transaction-item">
+                    <div class="transaction-info">
+                        <div class="transaction-icon debit">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <span class="transaction-name">Transfer ke Budi</span>
+                            <span class="transaction-date">Hari ini, 14:30</span>
+                        </div>
+                    </div>
+                    <span class="transaction-amount amount-debit">-Rp 500.000</span>
+                </div>
+                
+                <!-- Add more transaction items here -->
             </div>
-        </div>
+        @else
+            <div class="no-transactions">
+                <i class="fas fa-receipt text-4xl mb-3 text-gray-400"></i>
+                <p>Belum ada transaksi</p>
+            </div>
+        @endif
     </div>
 </main>
 </body>

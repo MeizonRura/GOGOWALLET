@@ -250,7 +250,146 @@
     margin: 0 auto;
 }
 
-/* Update responsive design */
+/* Transaction Section Styles */
+.transactions {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    margin-top: 2rem;
+}
+
+.transactions-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f3f4f6;
+}
+
+.transaction-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 12px;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.transaction-item:hover {
+    transform: translateY(-2px);
+    border-color: #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.transaction-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.transaction-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.transaction-icon.debit {
+    background: #fee2e2;
+}
+
+.transaction-icon.debit i {
+    color: #dc2626;
+}
+
+.transaction-icon.credit {
+    background: #dcfce7;
+}
+
+.transaction-icon.credit i {
+    color: #16a34a;
+}
+
+.transaction-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.transaction-name {
+    font-weight: 500;
+    color: #1a1a1a;
+    font-size: 0.95rem;
+}
+
+.transaction-date {
+    color: #64748b;
+    font-size: 0.813rem;
+}
+
+.transaction-amount {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.amount-debit {
+    color: #dc2626;
+}
+
+.amount-credit {
+    color: #16a34a;
+}
+
+/* Empty state */
+.no-transactions {
+    text-align: center;
+    padding: 2rem;
+    color: #64748b;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+    .transactions {
+        padding: 1rem;
+        border-radius: 12px;
+    }
+
+    .transaction-item {
+        padding: 0.75rem;
+    }
+
+    .transaction-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .transaction-name {
+        font-size: 0.875rem;
+    }
+
+    .transaction-date {
+        font-size: 0.75rem;
+    }
+
+    .transaction-amount {
+        font-size: 0.875rem;
+    }
+}
+
 @media (max-width: 768px) {
     .dashboard-content {
         padding: 85px 1rem 1rem;
