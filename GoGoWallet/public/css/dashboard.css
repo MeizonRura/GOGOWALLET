@@ -1,0 +1,284 @@
+/* Base styles */
+.dashboard {
+    background-color: #f3f4f6;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Header styles */
+.top-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 50;
+}
+
+.logo {
+    height: 40px;
+    width: auto;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.logout-button:hover {
+    color: #dc2626;
+}
+
+/* Main Content styles */
+.dashboard-content {
+    padding: 90px 2rem 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* User Balance Section */
+.user-balance-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.profile-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.profile-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.profile-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 3px solid #00bd6f;
+    object-fit: cover;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.welcome-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.account-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    color: #64748b;
+    letter-spacing: 1px;
+}
+
+/* Balance Card */
+.balance-card {
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.balance-amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #00bd6f;
+}
+
+/* Quick Actions Grid */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.action-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.75rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.action-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    transition: all 0.3s ease;
+}
+
+/* Card Top Border Colors */
+.action-card:nth-child(1)::before {
+    background: #00bd6f;
+}
+
+.action-card:nth-child(2)::before {
+    background: #ff9800;
+}
+
+.action-card:nth-child(3)::before {
+    background: #0088ff;
+}
+
+.quick-actions-row-bottom .action-card:nth-child(1)::before {
+    background: #8833ff;
+}
+
+.quick-actions-row-bottom .action-card:nth-child(2)::before {
+    background: #ff3366;
+}
+
+.action-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+/* Transfer Rupiah Icon */
+.transfer-icon {
+    background: linear-gradient(145deg, #ebfaf0, #d1f7e0);
+    color: #00bd6f;
+}
+
+/* Transfer Valas Icon */
+.valas-icon {
+    background: linear-gradient(145deg, #fff4e6, #ffe8cc);
+    color: #ff9800;
+}
+
+/* Payment Icon */
+.payment-icon {
+    background: linear-gradient(145deg, #e8f4ff, #cce7ff);
+    color: #0088ff;
+}
+
+/* Billing Icon */
+.billing-icon {
+    background: linear-gradient(145deg, #f3e8ff, #e4ccff);
+    color: #8833ff;
+}
+
+/* Loan Icon */
+.loan-icon {
+    background: linear-gradient(145deg, #ffeef0, #ffccd3);
+    color: #ff3366;
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+}
+
+.action-card:hover .action-icon {
+    transform: scale(1.1);
+}
+
+.action-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 1rem 0 0.5rem;
+}
+
+.action-description {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* New styles for the quick actions layout */
+.quick-actions-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.quick-actions-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.quick-actions-row-bottom {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    width: 66%;
+    margin: 0 auto;
+}
+
+/* Update responsive design */
+@media (max-width: 768px) {
+    .dashboard-content {
+        padding: 85px 1rem 1rem;
+    }
+
+    .user-balance-section {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .profile-wrapper {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-actions-top,
+    .quick-actions-bottom {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+
+    .quick-actions-row,
+    .quick-actions-row-bottom {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+}
