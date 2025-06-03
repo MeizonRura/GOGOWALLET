@@ -15,9 +15,10 @@ return new class extends Migration
 {
         Schema::create('tagihans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_pelanggan');
+            $table->string('nomor_rekening');
+            $table->string('nama_rekening');
+            $table->decimal('nominal_tagihan', 12, 2);
             $table->string('deskripsi');
-            $table->decimal('jumlah', 12, 2);
             $table->boolean('status_dibayar')->default(false);
             $table->timestamps();
         });

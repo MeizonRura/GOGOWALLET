@@ -89,7 +89,7 @@
         <!-- Bottom Row: Billing and Loan (Centered) -->
         <div class="quick-actions-row-bottom">
             <!-- Billing -->
-<a href="{{ route('tagihan.create') }}">
+<a href="{{ route('tagihan.index') }}">
     <div class="action-card">
         <div class="action-icon billing-icon">
             <i class="fas fa-file-invoice text-2xl"></i>
