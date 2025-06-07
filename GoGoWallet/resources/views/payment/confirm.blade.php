@@ -34,23 +34,24 @@
             </div>
         </div>
 
-        <form action="{{ route('pembayaran.store') }}" method="POST">
+        <form action="{{ route('pembayaran.store') }}" method="POST" class="space-y-4">
             @csrf
             <input type="hidden" name="virtual_account" value="{{ $virtual_account }}">
             <input type="hidden" name="amount" value="{{ $amount }}">
             <input type="hidden" name="confirm" value="1">
-            <button type="submit"
-                class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg shadow-md transition">
-                Bayar Sekarang
-            </button>
+            
+            <div class="flex flex-col space-y-2">
+                <button type="submit" 
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg shadow-md transition">
+                    Bayar Sekarang
+                </button>
+                
+                <a href="{{ route('pembayaran.va') }}"
+                   class="inline-flex items-center justify-center text-sm text-green-600 hover:text-green-800 transition py-1">
+                    <i class="fas fa-arrow-left mr-2"></i> Kembali
+                </a>
+            </div>
         </form>
-
-        <div class="text-center pt-2">
-            <a href="{{ route('pembayaran.index') }}"
-               class="inline-flex items-center text-sm text-green-600 hover:text-green-800 transition">
-                <i class="fas fa-history mr-2"></i> Lihat Riwayat Pembayaran
-            </a>
-        </div>
     </div>
 </body>
 </html>

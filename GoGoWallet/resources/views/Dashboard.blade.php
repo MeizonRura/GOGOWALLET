@@ -123,7 +123,7 @@
     <!-- Transaction List -->
     <div class="transactions">
         <h2 class="transactions-title">Transaksi Terakhir</h2>
-        @if(isset($transactions) && $transactions instanceof \Illuminate\Database\Eloquent\Collection && $transactions->isNotEmpty())
+        @if(isset($transactions) && $transactions->isNotEmpty())
             <div class="transaction-list">
                 @foreach($transactions as $transaction)
                     <div class="transaction-item">

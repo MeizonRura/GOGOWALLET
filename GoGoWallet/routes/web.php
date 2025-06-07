@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     
     // Pembayaran routes
     Route::get('/pembayaran/va', [PaymentController::class, 'vaForm'])->name('pembayaran.va');
+    Route::post('/pembayaran/check-va', [PaymentController::class, 'checkVa'])->name('pembayaran.checkVa'); // Add this line
     Route::post('/pembayaran', [PaymentController::class, 'store'])->name('pembayaran.store');
     Route::get('/pembayaran/sukses', function() {
         return view('payment.sukses');
