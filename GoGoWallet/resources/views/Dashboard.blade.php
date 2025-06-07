@@ -11,7 +11,6 @@
 </head>
 <body class="dashboard">
 
-
 <div class="top-header">
     @if(file_exists(public_path('images/logo.png')))
         <img src="{{ asset('images/logo.png') }}" alt="GoWallet" class="logo">
@@ -45,6 +44,9 @@
                 <div class="profile-info">
                     <p class="welcome-text">Hii, {{ auth()->user()->name }}</p>
                     <p class="account-number">{{ auth()->user()->account_number }}</p>
+                    <p class="saldo-text font-semibold mt-2">
+                        Saldo: Rp{{ number_format(auth()->user()->saldo, 0, ',', '.') }}
+                    </p>
                 </div>
             </div>
         </div>
@@ -52,7 +54,7 @@
             <div class="balance-wrapper">
                 <div class="balance-info">
                     <p class="balance-label">Saldo Anda</p>
-                    <p class="balance-amount">Rp {{ number_format(auth()->user()->balance, 0, ',', '.') }}</p>
+                    <p class="balance-amount">Rp {{ number_format(auth()->user()->saldo, 0, ',', '.') }}</p>
                 </div>
                 <button onclick="window.location.href='{{ route('topup') }}'" class="topup-button">
                     <i class="fas fa-plus-circle"></i>
@@ -97,17 +99,15 @@
         <!-- Bottom Row: Billing and Loan (Centered) -->
         <div class="quick-actions-row-bottom">
             <!-- Billing -->
-<a href="{{ route('tagihan.index') }}">
-    <div class="action-card">
-        <div class="action-icon billing-icon">
-            <i class="fas fa-file-invoice text-2xl"></i>
-        </div>
-        <h3 class="action-title">Tagih Uang</h3>
-        <p class="action-description">tagih Uang anda dengan cepat</p>
-    </div>
-</a>
-
-
+            <a href="{{ route('tagihan.index') }}">
+                <div class="action-card">
+                    <div class="action-icon billing-icon">
+                        <i class="fas fa-file-invoice text-2xl"></i>
+                    </div>
+                    <h3 class="action-title">Tagih Uang</h3>
+                    <p class="action-description">tagih Uang anda dengan cepat</p>
+                </div>
+            </a>
 
             <!-- Loan -->
             <div class="action-card">

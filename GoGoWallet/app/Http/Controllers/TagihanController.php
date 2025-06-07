@@ -40,10 +40,18 @@ class TagihanController extends Controller
     public function markAsPaid($id)
     {
         $tagihan = Tagihan::findOrFail($id);
+    if (!$tagihan->status_dibayar) {
         $tagihan->status_dibayar = true;
         $tagihan->save();
 
-        return redirect()->route('tagihan.index')
-            ->with('success', 'Tagihan telah ditandai sebagai dibayar.');
+        // Tambahkan saldo ke user yang sedang login
+        $user = auth()->user();
+        $user->saldo += $tagihan->nominal_tagihan;
+        $user->save();
     }
+
+    return redirect()->route('tagihan.index')
+        ->with('success', 'Tagihan telah ditandai sebagai dibayar dan saldo bertambah.');
+}
+
 }

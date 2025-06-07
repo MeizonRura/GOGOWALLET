@@ -30,8 +30,8 @@ class TopUpController extends Controller
             'payment_method' => $request->bank
         ]);
 
-        // Update user balance
-        $user->balance += $request->amount;
+        // Update user saldo (bukan balance)
+        $user->saldo += $request->amount;
         $user->save();
 
         return redirect()->route('dashboard')
