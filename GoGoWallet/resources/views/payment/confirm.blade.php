@@ -3,68 +3,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konfirmasi Pembayaran VA - GoGoWallet</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Konfirmasi Pembayaran - GoGoWallet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a2e0da3f3b.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/payment.css') }}">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
-<body>
-    <div class="transfer-container">
-        <header class="transfer-header">
-            <a href="{{ route('pembayaran.va') }}" class="back-button">
-                <i class="fas fa-arrow-left"></i>
-            </a>
-            <h1>
-                <i class="fas fa-credit-card text-green-500"></i>
-                Konfirmasi Pembayaran
-            </h1>
-        </header>
-        <div class="transfer-card">
-            <div class="sender-info mb-6">
-                <div class="account-balance">
-                    <span class="label">Saldo Tersedia</span>
-                    <span class="amount">Rp {{ number_format($user->balance, 0, ',', '.') }}</span>
-                </div>
-                <div class="account-number">
-                    <span class="label">No. Akun Anda</span>
-                    <span class="number">{{ auth()->user()->account_number ?? '-' }}</span>
-                </div>
+<body class="bg-gradient-to-b from-green-50 to-white min-h-screen flex items-center justify-center px-4 py-10">
+    <div class="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8 space-y-8 transition-all duration-300">
+        <div class="text-center space-y-2">
+            <div class="text-green-500 text-4xl">
+                <i class="fas fa-money-check-alt"></i>
             </div>
-            @if ($errors->any())
-                <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center">
-                    @foreach ($errors->all() as $error)
-                        <div>{{ $error }}</div>
-                    @endforeach
-                </div>
-            @endif
-            @if($user->balance < session('payment_amount'))
-                <div class="alert alert-error">
-                    Saldo Anda tidak mencukupi untuk melakukan pembayaran ini
-                </div>
-            @endif
-            <form action="{{ route('pembayaran.store') }}" method="POST" class="transfer-form">
-                @csrf
-                <input type="hidden" name="virtual_account" value="{{ $virtual_account }}">
-                <input type="hidden" name="amount" value="{{ $amount }}">
-                <div class="form-group">
-                    <label>Virtual Account Tujuan</label>
-                    <div class="input-group">
-                        <input type="text" value="{{ $virtual_account }}" disabled>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Nominal Pembayaran</label>
-                    <div class="input-group currency">
-                        <span class="currency-symbol">Rp</span>
-                        <input type="text" value="{{ number_format($amount,0,',','.') }}" disabled>
-                    </div>
-                </div>
-                <button type="submit" class="submit-button">
-                    <span>Bayar Sekarang</span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </form>
+            <h2 class="text-2xl font-bold text-gray-800">Konfirmasi Pembayaran</h2>
+            <p class="text-sm text-gray-500">Mohon periksa kembali informasi pembayaran Anda.</p>
+        </div>
+
+        <div class="bg-gray-50 rounded-xl p-4 space-y-3 border border-gray-200">
+            <div class="flex justify-between text-sm text-gray-600">
+                <span>Virtual Account</span>
+                <span class="font-medium text-gray-900">{{ $virtual_account }}</span>
+            </div>
+            <div class="flex justify-between text-sm text-gray-600">
+                <span>Nominal</span>
+                <span class="font-semibold text-green-600">Rp {{ number_format($amount, 0, ',', '.') }}</span>
+            </div>
+        </div>
+
+        <form action="{{ route('pembayaran.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="virtual_account" value="{{ $virtual_account }}">
+            <input type="hidden" name="amount" value="{{ $amount }}">
+            <input type="hidden" name="confirm" value="1">
+            <button type="submit"
+                class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg shadow-md transition">
+                Bayar Sekarang
+            </button>
+        </form>
+
+        <div class="text-center pt-2">
+            <a href="{{ route('pembayaran.index') }}"
+               class="inline-flex items-center text-sm text-green-600 hover:text-green-800 transition">
+                <i class="fas fa-history mr-2"></i> Lihat Riwayat Pembayaran
+            </a>
         </div>
     </div>
 </body>

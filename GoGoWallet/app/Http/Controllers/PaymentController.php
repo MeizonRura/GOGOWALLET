@@ -12,8 +12,10 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        return view('payment.index', compact('user'));
+        // Ambil semua pembayaran milik user yang sedang login
+        $payments = Payment::where('user_id', auth()->id())->latest()->get();
+
+        return view('payment.index', compact('payments'));
     }
 
     public function vaForm()
@@ -25,63 +27,74 @@ class PaymentController extends Controller
     public function checkVa(Request $request)
     {
         $request->validate([
-            'va_number' => 'required|string|size:16'
+            'virtual_account' => 'required|string'
         ]);
 
-        // Simulate VA number validation
-        // In real application, this would check against a VA database
-        $amount = mt_rand(10000, 1000000); // Example amount
-        
-        return response()->json([
-            'valid' => true,
-            'amount' => $amount,
-            'description' => 'Payment for Virtual Account ' . $request->va_number
-        ]);
+        // Simulasi data VA
+        $data = [
+            '1234567890' => 150000,
+            '9876543210' => 250000,
+        ];
+
+        $va = $request->virtual_account;
+        if (isset($data[$va])) {
+            // Tampilkan halaman konfirmasi
+            return view('payment.confirm', [
+                'virtual_account' => $va,
+                'amount' => $data[$va]
+            ]);
+        } else {
+            // Kembali ke form dengan error
+            return back()->withInput()->with('error', 'Virtual Account tidak ditemukan!');
+        }
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'va_number' => 'required|string|size:16',
-            'amount' => 'required|numeric|min:1000'
+            'virtual_account' => 'required|string',
+            'amount' => 'required|numeric'
         ]);
 
-        $user = Auth::user();
+        // Simulasi data VA
+        $data = [
+            '1234567890' => 150000,
+            '9876543210' => 250000,
+        ];
+
+        $va = $request->virtual_account;
         $amount = $request->amount;
 
-        // Check if user has sufficient balance
+        // Cek VA valid
+        if (!isset($data[$va]) || $data[$va] != $amount) {
+            return back()->withInput()->with('error', 'Virtual Account atau nominal tidak valid!');
+        }
+
+        // Jika belum konfirmasi, tampilkan halaman konfirmasi
+        if (!$request->has('confirm')) {
+            return view('payment.confirm', [
+                'virtual_account' => $va,
+                'amount' => $amount
+            ]);
+        }
+
+        // Jika sudah konfirmasi, simpan pembayaran
+        $user = auth()->user();
         if ($user->balance < $amount) {
-            return back()->withErrors([
-                'amount' => 'Saldo tidak mencukupi untuk melakukan pembayaran ini'
-            ]);
+            return back()->with('error', 'Saldo tidak cukup!');
         }
+        $user->balance -= $amount;
+        $user->save();
 
-        try {
-            DB::beginTransaction();
+        \App\Models\Payment::create([
+            'user_id' => $user->id,
+            'va_number' => $va,
+            'amount' => $amount,
+            'status' => 'success',
+            'description' => 'Pembayaran VA'
+        ]);
 
-            // Deduct user's balance
-            $user->balance -= $amount;
-            $user->save();
-
-            // Create payment record
-            Payment::create([
-                'user_id' => $user->id,
-                'va_number' => $request->va_number,
-                'amount' => $amount,
-                'status' => 'success',
-                'description' => 'Payment for VA ' . $request->va_number
-            ]);
-
-            DB::commit();
-
-            return redirect()->route('pembayaran.sukses')
-                ->with('success', 'Pembayaran berhasil dilakukan');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->withErrors([
-                'general' => 'Terjadi kesalahan saat memproses pembayaran'
-            ]);
-        }
+        return redirect()->route('pembayaran.sukses');
     }
 
     public function confirm()
