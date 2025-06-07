@@ -97,13 +97,17 @@
         <!-- Bottom Row: Billing and Loan (Centered) -->
         <div class="quick-actions-row-bottom">
             <!-- Billing -->
-            <div class="action-card">
-                <div class="action-icon billing-icon">
-                    <i class="fas fa-file-invoice text-2xl"></i>
-                </div>
-                <h3 class="action-title">Tagih Uang</h3>
-                <p class="action-description">tagih Uang anda dengan cepat</p>
-            </div>
+<a href="{{ route('tagihan.index') }}">
+    <div class="action-card">
+        <div class="action-icon billing-icon">
+            <i class="fas fa-file-invoice text-2xl"></i>
+        </div>
+        <h3 class="action-title">Tagih Uang</h3>
+        <p class="action-description">tagih Uang anda dengan cepat</p>
+    </div>
+</a>
+
+
 
             <!-- Loan -->
             <div class="action-card">

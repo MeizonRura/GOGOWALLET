@@ -37,4 +37,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/transfer-valas', [ValasController::class, 'store'])->name('transfer-valas.store');
 });
 
+use App\Http\Controllers\TagihanController;
+
+Route::get('/tagihan', [TagihanController::class, 'index'])->name('tagihan.index');
+Route::get('/tagihan/create', [TagihanController::class, 'create'])->name('tagihan.create');
+Route::post('/tagihan/store', [TagihanController::class, 'store'])->name('tagihan.store');
+Route::post('/tagihan/{id}/mark-paid', [TagihanController::class, 'markAsPaid'])->name('tagihan.markAsPaid');
+
+
 
