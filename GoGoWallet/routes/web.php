@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TopUpController;
+use App\Http\Controllers\ValasController;
+
 
 // Default route redirecting to register
 Route::get('/', function () {
@@ -29,5 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/topup/process', [TopUpController::class, 'process'])->name('topup.process');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/transfer-valas', [ValasController::class, 'index'])->name('transfer-valas.index');
+    Route::get('/transfer-valas/create', [ValasController::class, 'create'])->name('transfer-valas.create');
+    Route::post('/transfer-valas', [ValasController::class, 'store'])->name('transfer-valas.store');
+});
 
 
