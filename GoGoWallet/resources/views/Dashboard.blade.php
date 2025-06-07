@@ -123,51 +123,64 @@
     <!-- Transaction List -->
     <div class="transactions">
         <h2 class="transactions-title">Transaksi Terakhir</h2>
-        @if(count($transactions ?? []) > 0)
-            <div class="transaction-list">
-                <!-- Example Credit Transaction -->
-                <div class="transaction-item">
-                    <div class="transaction-info">
-                        <div class="transaction-icon credit">
-                            <i class="fas fa-arrow-down"></i>
-                        </div>
-                        <div class="transaction-details">
-                            <span class="transaction-name">Terima dari Ahmad</span>
-                            <span class="transaction-date">Hari ini, 15:30</span>
-                        </div>
-                    </div>
-                    <span class="transaction-amount amount-credit">+Rp 1.000.000</span>
+        
+        <!-- Success Notification -->
+        @if(session('success'))
+            <div class="success-notification">
+                <div class="notification-content">
+                    <i class="fas fa-check-circle"></i>
+                    <p>{{ session('success') }}</p>
                 </div>
-
-                <!-- Example Debit Transaction -->
-                <div class="transaction-item">
-                    <div class="transaction-info">
-                        <div class="transaction-icon debit">
-                            <i class="fas fa-arrow-up"></i>
-                        </div>
-                        <div class="transaction-details">
-                            <span class="transaction-name">Transfer ke Budi</span>
-                            <span class="transaction-date">Hari ini, 14:30</span>
-                        </div>
-                    </div>
-                    <span class="transaction-amount amount-debit">-Rp 500.000</span>
-                </div>
-                
-                <!-- Add more transaction items here -->
-            </div>
-        @else
-            <div class="no-transactions">
-                <i class="fas fa-receipt text-4xl mb-3 text-gray-400"></i>
-                <p>Belum ada transaksi</p>
             </div>
         @endif
-    </div>
 
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+        <!-- Transaction List -->
+        @if(count($transactions ?? []) > 0)
+            <div class="transaction-list">
+                @foreach($transactions as $transaction)
+                    @if($transaction instanceof \App\Models\TransferValas)
+                    <!-- Valas Transaction -->
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-icon valas">
+                                <i class="fas fa-globe-asia"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <span class="transaction-name">Transfer Valas ke {{ $transaction->recipient_bank }}</span>
+                                <span class="transaction-date">{{ $transaction->created_at->format('d M Y, H:i') }}</span>
+                                <span class="transaction-currency">{{ $transaction->amount_valas }} {{ $transaction->currency }}</span>
+                            </div>
+                        </div>
+                        <span class="transaction-amount amount-debit">-Rp {{ number_format($transaction->amount_idr, 0, ',', '.') }}</span>
+                    </div>
+                    @else
+                    <!-- Regular Transaction -->
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-icon {{ $transaction->type == 'credit' ? 'credit' : 'debit' }}">
+                                <i class="fas fa-{{ $transaction->type == 'credit' ? 'arrow-down' : 'arrow-up' }}"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <span class="transaction-name">{{ $transaction->description }}</span>
+                                <span class="transaction-date">{{ $transaction->created_at->format('d M Y, H:i') }}</span>
+                            </div>
+                        </div>
+                        <span class="transaction-amount {{ $transaction->type == 'credit' ? 'amount-credit' : 'amount-debit' }}">
+                            {{ $transaction->type == 'credit' ? '+' : '-' }}Rp {{ number_format($transaction->amount, 0, ',', '.') }}
+                        </span>
+                    </div>
+                    @endif
+                @endforeach
+            </div>
+        @else
+            @if(!session('success'))
+            <div class="no-transactions">
+                <i class="fas fa-receipt"></i>
+                <p>Belum ada transaksi</p>
+            </div>
+            @endif
+        @endif
+    </div>
 </main>
 </body>
 </html>

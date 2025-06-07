@@ -316,20 +316,18 @@
 }
 
 .transaction-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
+    background: #ffffff;
     border-radius: 12px;
-    background: #f8fafc;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid #e5e7eb;
     transition: all 0.3s ease;
-    border: 1px solid transparent;
 }
 
 .transaction-item:hover {
     transform: translateY(-2px);
-    border-color: #e5e7eb;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .transaction-info {
@@ -356,12 +354,24 @@
     color: #dc2626;
 }
 
+.transaction-icon.debit .fa-globe-asia {
+    color: #ef4444;
+}
+
 .transaction-icon.credit {
     background: #dcfce7;
 }
 
 .transaction-icon.credit i {
     color: #16a34a;
+}
+
+.transaction-icon.valas {
+    background: linear-gradient(145deg, #fff4e6, #ffe8cc);
+}
+
+.transaction-icon.valas i {
+    color: #ff9800;
 }
 
 .transaction-details {
@@ -387,18 +397,39 @@
     font-size: 0.95rem;
 }
 
+.transaction-currency {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 0.25rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
 .amount-debit {
     color: #dc2626;
+    font-weight: 600;
 }
 
 .amount-credit {
     color: #16a34a;
+    font-weight: 600;
 }
 
 /* Empty state */
 .no-transactions {
     text-align: center;
-    padding: 2rem;
+    padding: 3rem 2rem;
+    color: #64748b;
+}
+
+.no-transactions i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.no-transactions p {
+    font-size: 1rem;
     color: #64748b;
 }
 
@@ -416,15 +447,41 @@
     color: #00bd6f;
 }
 
-@keyframes slideIn {
-    from {
-        transform: translateY(-10px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+/* Success Notification Styles */
+.success-notification {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    animation: slideIn 0.3s ease;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.notification-content i {
+    color: #00bd6f;
+    font-size: 1.5rem;
+}
+
+.notification-content p {
+    color: #1a1a1a;
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Hide no transactions message when there are transactions */
+.transaction-list:not(:empty) + .no-transactions {
+    display: none;
 }
 
 /* Responsive design */

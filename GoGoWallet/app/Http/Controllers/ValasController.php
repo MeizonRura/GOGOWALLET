@@ -33,7 +33,12 @@ class ValasController extends Controller
             'amount_valas' => $request->amount_valas
         ]);
 
+        $user = Auth::user();
+        $user->balance -= $request->amount_idr;
+        $user->save();
+
         return redirect()->route('dashboard')
-            ->with('success', 'Transfer valas berhasil dilakukan');
+            ->with('success', 'Transfer valas berhasil dilakukan sebesar ' . 
+                $request->amount_valas . ' ' . $request->currency);
     }
 }

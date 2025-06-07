@@ -6,12 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransferValas extends Model
 {
-    protected $table = 'transfer_valas';
-
     protected $fillable = [
         'user_id',
         'account_number',
-        'recipient_bank',
+        'recipient_bank', 
         'currency',
         'amount_idr',
         'exchange_rate',

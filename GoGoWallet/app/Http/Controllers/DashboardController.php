@@ -2,16 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
+use App\Models\TransferValas;
+use Illuminate\Support\Facades\Auth;
+
 class DashboardController extends Controller
 {
     public function index()
     {
-        // Dummy user data for development
-        $user = (object)[
-            'name' => 'John Doe',
-            'profile_photo_url' => 'https://ui-avatars.com/api/?name=John+Doe&background=0D8ABC&color=fff',
-        ];
+        $user = Auth::user();
 
-        return view('dashboard', compact('user'));
+        // Get regular transactions
+        $regularTransactions = Transaction::where('user_id', $user->id)
+            ->latest()
+            ->take(10)
+            ->get();
+
+        // Get valas transactions 
+        $valasTransactions = TransferValas::where('user_id', $user->id)
+            ->latest()
+            ->take(10)
+            ->get();
+
+        // Merge and sort transactions by date
+        $transactions = $regularTransactions->concat($valasTransactions)
+            ->sortByDesc('created_at')
+            ->take(10);
+
+        return view('Dashboard', compact('transactions'));
     }
 }
