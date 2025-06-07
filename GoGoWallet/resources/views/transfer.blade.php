@@ -32,6 +32,17 @@
                 </div>
             </div>
 
+            <!-- Error messages with margin -->
+            @if ($errors->any())
+                <div class="alert alert-error" style="margin-bottom: 2rem;">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <!-- Transfer form -->
             <form action="{{ route('transfer.process') }}" method="POST" class="transfer-form">
                 @csrf
@@ -45,9 +56,6 @@
                             required
                             placeholder="Masukkan nomor rekening tujuan"
                         >
-                        <button type="button" class="scan-qr">
-                            <i class="fas fa-qrcode"></i>
-                        </button>
                     </div>
                 </div>
 

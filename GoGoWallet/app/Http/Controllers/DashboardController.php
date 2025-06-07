@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
+
 class DashboardController extends Controller
 {
     public function index()
     {
-        // Dummy user data for development
-        $user = (object)[
-            'name' => 'John Doe',
-            'profile_photo_url' => 'https://ui-avatars.com/api/?name=John+Doe&background=0D8ABC&color=fff',
-        ];
+        $user = Auth::user();
+        
+        // Get latest transactions for current user (either as sender or recipient)
+        $transactions = Transaction::where('sender_id', $user->id)
+            ->orWhere('recipient_id', $user->id)
+            ->with(['sender', 'recipient'])
+            ->latest()
+            ->take(5)
+            ->get();
 
-        return view('dashboard', compact('user'));
+        return view('Dashboard', compact('transactions'));
     }
 }

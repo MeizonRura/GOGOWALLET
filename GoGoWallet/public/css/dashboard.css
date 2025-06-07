@@ -226,6 +226,11 @@
     color: #ff9800;
 }
 
+.transaction-icon.valas {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
 /* Payment Icon */
 .payment-icon {
     background: linear-gradient(145deg, #e8f4ff, #cce7ff);
@@ -320,21 +325,16 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    border-radius: 12px;
-    background: #f8fafc;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
+    border-bottom: 1px solid #e5e7eb;
 }
 
-.transaction-item:hover {
-    transform: translateY(-2px);
-    border-color: #e5e7eb;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+.transaction-item:last-child {
+    border-bottom: none;
 }
 
 .transaction-info {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 1rem;
 }
 
@@ -348,51 +348,51 @@
     flex-shrink: 0;
 }
 
-.transaction-icon.debit {
-    background: #fee2e2;
-}
-
-.transaction-icon.debit i {
-    color: #dc2626;
-}
-
-.transaction-icon.credit {
-    background: #dcfce7;
-}
-
-.transaction-icon.credit i {
-    color: #16a34a;
-}
-
 .transaction-details {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    flex-grow: 1;
 }
 
 .transaction-name {
+    font-size: 1rem;
     font-weight: 500;
     color: #1a1a1a;
-    font-size: 0.95rem;
-}
-
-.transaction-date {
-    color: #64748b;
-    font-size: 0.813rem;
 }
 
 .transaction-amount {
-    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.125rem;
     font-weight: 600;
-    font-size: 0.95rem;
+}
+
+.transaction-date {
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.transaction-note {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-style: italic;
+}
+
+.amount-credit {
+    color: #00bd6f;
 }
 
 .amount-debit {
     color: #dc2626;
 }
 
-.amount-credit {
-    color: #16a34a;
+.transaction-icon.credit {
+    background: #f0fdf4;
+    color: #00bd6f;
+}
+
+.transaction-icon.debit {
+    background: #fef2f2;
+    color: #dc2626;
 }
 
 /* Empty state */

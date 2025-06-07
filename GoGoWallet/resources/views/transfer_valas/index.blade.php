@@ -18,22 +18,33 @@
             <h1>Transfer Valas</h1>
         </header>
 
+        <!-- Sender info -->
+        <div class="sender-info">
+            <div class="account-balance">
+                <span class="label">Saldo Tersedia</span>
+                <span class="amount">Rp {{ number_format(auth()->user()->balance, 0, ',', '.') }}</span>
+            </div>
+            <div class="account-number">
+                <span class="label">Nomor Rekening Anda</span>
+                <span class="number">{{ auth()->user()->account_number }}</span>
+            </div>
+        </div>
+
+        <!-- Error messages -->
+        @if ($errors->any())
+            <div class="alert alert-error">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <!-- Main transfer form -->
         <div class="transfer-card">
-            <!-- Sender info -->
-            <div class="sender-info">
-                <div class="account-balance">
-                    <span class="label">Saldo Tersedia</span>
-                    <span class="amount">Rp {{ number_format(auth()->user()->balance, 0, ',', '.') }}</span>
-                </div>
-                <div class="account-number">
-                    <span class="label">Nomor Rekening Anda</span>
-                    <span class="number">{{ auth()->user()->account_number }}</span>
-                </div>
-            </div>
-
             <!-- Transfer form -->
-            <form action="{{ route('transfer-valas.store') }}" method="POST" class="transfer-form">
+            <form action="{{ route('transfer-valas.store') }}" method="POST" class="transfer-form" id="valasForm">
                 @csrf
                 <div class="form-group">
                     <label for="currency">Pilih Mata Uang</label>
@@ -220,6 +231,16 @@
                 bankSelect.appendChild(option);
             });
         }
+
+        document.getElementById('valasForm').addEventListener('submit', function(e) {
+            const amount = parseFloat(document.getElementById('amount_idr').value);
+            const balance = parseFloat('{{ auth()->user()->balance }}');
+            
+            if (amount > balance) {
+                e.preventDefault();
+                alert('Saldo anda tidak mencukupi untuk melakukan transfer ini');
+            }
+        });
     </script>
 </body>
 </html>

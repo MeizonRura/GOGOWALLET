@@ -228,6 +228,42 @@ textarea:focus {
     margin-top: 2rem;
 }
 
+/* Alerts */
+.alert {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+}
+
+.alert-error {
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #991b1b;
+}
+
+.alert-error ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.alert-error li {
+    margin: 0.5rem 0;
+}
+
+/* Transaction Icon */
+.transaction-icon.valas {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* Transaction Note */
+.transaction-note {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-style: italic;
+}
+
 /* Responsive Design */
 @media (max-width: 640px) {
     .transfer-card {

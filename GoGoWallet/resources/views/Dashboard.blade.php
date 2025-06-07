@@ -91,7 +91,7 @@
                 </div>
                 <h3 class="action-title">Pembayaran</h3>
                 <p class="action-description">Bayar tagihan & layanan</p>
-            </a>
+            </a>
         </div>
 
         <!-- Bottom Row: Billing and Loan (Centered) -->
@@ -123,37 +123,63 @@
     <!-- Transaction List -->
     <div class="transactions">
         <h2 class="transactions-title">Transaksi Terakhir</h2>
-        @if(count($transactions ?? []) > 0)
+        @if($transactions->count() > 0)
             <div class="transaction-list">
-                <!-- Example Credit Transaction -->
-                <div class="transaction-item">
-                    <div class="transaction-info">
-                        <div class="transaction-icon credit">
-                            <i class="fas fa-arrow-down"></i>
-                        </div>
-                        <div class="transaction-details">
-                            <span class="transaction-name">Terima dari Ahmad</span>
-                            <span class="transaction-date">Hari ini, 15:30</span>
+                @foreach($transactions as $transaction)
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            @if($transaction->type === 'transfer_valas')
+                                <!-- Valas transaction -->
+                                <div class="transaction-icon debit valas">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <div class="transaction-details">
+                                    <span class="transaction-name">{{ $transaction->note }}</span>
+                                    <span class="transaction-amount amount-debit">
+                                        -Rp {{ number_format($transaction->amount, 0, ',', '.') }}
+                                    </span>
+                                    <span class="transaction-date">
+                                        {{ $transaction->created_at->locale('id')->isoFormat('D MMMM Y, HH:mm') }}
+                                    </span>
+                                </div>
+                            @elseif($transaction->recipient_id == auth()->id())
+                                <!-- Incoming transaction -->
+                                <div class="transaction-icon credit">
+                                    <i class="fas fa-arrow-down"></i>
+                                </div>
+                                <div class="transaction-details">
+                                    <span class="transaction-name">Terima dari {{ $transaction->sender->name }}</span>
+                                    <span class="transaction-amount amount-credit">
+                                        +Rp {{ number_format($transaction->amount, 0, ',', '.') }}
+                                    </span>
+                                    <span class="transaction-date">
+                                        {{ $transaction->created_at->locale('id')->isoFormat('D MMMM Y, HH:mm') }}
+                                    </span>
+                                    @if($transaction->note)
+                                        <span class="transaction-note">{{ $transaction->note }}</span>
+                                    @endif
+                                </div>
+                            @else
+                                <!-- Regular outgoing transaction -->
+                                <div class="transaction-icon debit">
+                                    <i class="fas fa-arrow-up"></i>
+                                </div>
+                                <div class="transaction-details">
+                                    <span class="transaction-name">Transfer ke {{ $transaction->recipient->name }}</span>
+                                    <span class="transaction-amount amount-debit">
+                                        -Rp {{ number_format($transaction->amount, 0, ',', '.') }}
+                                    </span>
+                                    <span class="transaction-date">
+                                        {{ $transaction->created_at->locale('id')->isoFormat('D MMMM Y, HH:mm') }}
+                                    </span>
+                                    @if($transaction->note)
+                                        <span class="transaction-note">{{ $transaction->note }}</span>
+                                    @endif
+                                </div>
+                            @endif
                         </div>
                     </div>
-                    <span class="transaction-amount amount-credit">+Rp 1.000.000</span>
-                </div>
-
-                <!-- Example Debit Transaction -->
-                <div class="transaction-item">
-                    <div class="transaction-info">
-                        <div class="transaction-icon debit">
-                            <i class="fas fa-arrow-up"></i>
-                        </div>
-                        <div class="transaction-details">
-                            <span class="transaction-name">Transfer ke Budi</span>
-                            <span class="transaction-date">Hari ini, 14:30</span>
-                        </div>
-                    </div>
-                    <span class="transaction-amount amount-debit">-Rp 500.000</span>
-                </div>
-                
-                <!-- Add more transaction items here -->
+                @endforeach
             </div>
         @else
             <div class="no-transactions">
