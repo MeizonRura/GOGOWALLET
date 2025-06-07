@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/tagihan', [TagihanController::class, 'index'])->name('tagihan.index');
     Route::get('/tagihan/create', [TagihanController::class, 'create'])->name('tagihan.create');
     Route::post('/tagihan/store', [TagihanController::class, 'store'])->name('tagihan.store');
-    Route::post('/tagihan/{id}/mark-paid', [TagihanController::class, 'markAsPaid'])->name('tagihan.markAsPaid');
+    Route::post('/tagihan/{id}/bayar', [TagihanController::class, 'bayar'])->name('tagihan.bayar');
 });
 
 // API routes

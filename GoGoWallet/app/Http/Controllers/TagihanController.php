@@ -2,15 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Tagihan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TagihanController extends Controller
 {
     public function index()
     {
-        $tagihans = Tagihan::all();
-        return view('tagihan.index', compact('tagihans'));
+        $myTagihan = Tagihan::where('user_id', auth()->id())->latest()->get();
+        $tagihanKepadaSaya = Tagihan::where('nomor_rekening', auth()->user()->account_number)
+            ->where('status_dibayar', false)
+            ->latest()
+            ->get();
+        $tagihanTerkirim = Tagihan::where('user_id', auth()->id())
+            ->where('status_dibayar', false)
+            ->latest()
+            ->get();
+        
+        return view('tagihan.index', compact('myTagihan', 'tagihanKepadaSaya', 'tagihanTerkirim'));
     }
 
     public function create()
@@ -27,6 +38,7 @@ class TagihanController extends Controller
         ]);
 
         Tagihan::create([
+            'user_id' => auth()->id(),
             'nomor_rekening' => $validated['nomor_rekening'],
             'nominal_tagihan' => $validated['nominal_tagihan'],
             'deskripsi' => $validated['deskripsi'],
@@ -45,5 +57,59 @@ class TagihanController extends Controller
 
         return redirect()->route('tagihan.index')
             ->with('success', 'Tagihan telah ditandai sebagai dibayar.');
+    }
+
+    public function bayar($id)
+    {
+        $tagihan = Tagihan::findOrFail($id);
+        $user = auth()->user();
+
+        // Verify this bill is for current user
+        if ($tagihan->nomor_rekening !== $user->account_number) {
+            return back()->withErrors([
+                'general' => 'Tagihan ini bukan untuk Anda'
+            ]);
+        }
+
+        // Check if bill is already paid
+        if ($tagihan->status_dibayar) {
+            return back()->withErrors([
+                'general' => 'Tagihan ini sudah dibayar'
+            ]);
+        }
+
+        // Check if user has sufficient balance
+        if ($user->balance < $tagihan->nominal_tagihan) {
+            return back()->withErrors([
+                'general' => 'Saldo Anda tidak mencukupi untuk membayar tagihan ini'
+            ]);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            // Deduct from payer's balance
+            $user->balance -= $tagihan->nominal_tagihan;
+            $user->save();
+
+            // Add to biller's balance
+            $penagih = User::find($tagihan->user_id);
+            $penagih->balance += $tagihan->nominal_tagihan;
+            $penagih->save();
+
+            // Mark bill as paid
+            $tagihan->status_dibayar = true;
+            $tagihan->save();
+
+            DB::commit();
+            return redirect()->route('tagihan.index')
+                ->with('success', 'Tagihan berhasil dibayar');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors([
+                'general' => 'Terjadi kesalahan saat memproses pembayaran'
+            ]);
+        }
     }
 }
