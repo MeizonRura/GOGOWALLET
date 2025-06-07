@@ -142,7 +142,7 @@
                     <i class="fas fa-home"></i> Dashboard
                 </a>
                 <a href="{{ route('pembayaran.index') }}" class="submit-button secondary">
-                    <i class="fas fa-list"></i> Riwayat Pembayaran
+                    <i class="fas fa-receipt"></i> Lihat Riwayat Pembayaran
                 </a>
             </div>
         </div>

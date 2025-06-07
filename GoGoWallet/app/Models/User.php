@@ -18,7 +18,7 @@ class User extends Authenticatable
         'date_of_birth',
         'profile_photo',
         'account_number',
-        'balance' // tambahkan ini
+        'balance',
     ];
 
     protected $hidden = [

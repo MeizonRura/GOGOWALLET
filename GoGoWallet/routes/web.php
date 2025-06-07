@@ -44,17 +44,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/transfer-valas/create', [ValasController::class, 'create'])->name('transfer-valas.create');
     Route::post('/transfer-valas', [ValasController::class, 'store'])->name('transfer-valas.store');
     
-    // Payment routes
-    Route::get('/pembayaran', [PaymentController::class, 'index'])->name('pembayaran.index');
+    // Pembayaran routes
     Route::get('/pembayaran/va', [PaymentController::class, 'vaForm'])->name('pembayaran.va');
-    Route::post('/pembayaran/check-va', [PaymentController::class, 'checkVa'])->name('pembayaran.checkVa');
     Route::post('/pembayaran', [PaymentController::class, 'store'])->name('pembayaran.store');
-    Route::get('/pembayaran/confirm', [PaymentController::class, 'confirm'])->name('pembayaran.confirm');
     Route::get('/pembayaran/sukses', function() {
         return view('payment.sukses');
     })->name('pembayaran.sukses');
+    Route::get('/pembayaran', [PaymentController::class, 'index'])->name('pembayaran.index');
 
-    
     // Tagihan routes
     Route::get('/tagihan', [TagihanController::class, 'index'])->name('tagihan.index');
     Route::get('/tagihan/create', [TagihanController::class, 'create'])->name('tagihan.create');
@@ -75,8 +72,5 @@ Route::get('/api/va-info', function(Request $request) {
             'amount' => $data[$va]
         ]);
     }
-    return response()->json(['success' => false]);
+    return response()->json(['success' => false, 'message' => 'Virtual Account tidak ditemukan']);
 });
-
-
-

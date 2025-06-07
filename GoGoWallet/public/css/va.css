@@ -1,0 +1,156 @@
+/* Container form grid */
+.va-container form {
+  display: grid;
+  grid-template-columns: 140px 1fr; /* label fix, input fleksibel */
+  gap: 1rem 1.5rem;
+  align-items: center;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* .form-group pembungkus */
+.form-group {
+  display: contents;
+}
+
+/* Label */
+.form-group label {
+  grid-column: 1 / 2;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #374151;
+  user-select: none;
+}
+
+/* Input text dan readonly */
+.form-group input[type="text"],
+.form-group input[readonly] {
+  grid-column: 2 / 3;
+  width: 100%;
+  padding: 0.65rem 1.25rem;
+  font-size: 1.05rem;
+  border-radius: 8px;
+  border: 1.5px solid #cbd5e1;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  color: #1e293b;
+  background-color: #fafafa;
+  font-weight: 500;
+  box-sizing: border-box;
+
+  /* Penting untuk cegah overflow */
+  white-space: nowrap;        /* jangan pecah baris */
+  overflow-x: auto;           /* scroll horizontal kalau kebanyakan teks */
+  overflow-y: hidden;
+  text-overflow: ellipsis;    /* tampilkan ... saat teks terlalu panjang */
+  -webkit-overflow-scrolling: touch; /* scroll smooth di iOS */
+}
+
+/* Input readonly */
+.form-group input[readonly] {
+  background-color: #f3f4f6;
+  border-color: #e5e7eb;
+  cursor: not-allowed;
+  color: #6b7280;
+}
+
+/* Fokus input */
+.form-group input[type="text"]:focus {
+  outline: none;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgb(34 197 94 / 0.3);
+}
+
+/* Error text */
+.error-text {
+  grid-column: 2 / 3;
+  margin-top: 0.25rem;
+  color: #dc2626;
+  font-size: 0.85rem;
+  font-weight: 500;
+  user-select: none;
+}
+
+/* Tombol submit full lebar */
+button[type="submit"] {
+  grid-column: 1 / 3;
+  margin-top: 1.5rem;
+  background-color: #22c55e;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.75rem 0;
+  border-radius: 0.6rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 10px rgb(34 197 94 / 0.45);
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #16a34a;
+}
+
+/* Margin top untuk .mt-4 */
+.mt-4 {
+  margin-top: 1rem;
+}
+
+/* Session error */
+.session-error {
+  grid-column: 1 / 3;
+  margin-top: 1rem;
+  text-align: center;
+  color: #dc2626;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Container utama */
+.va-container {
+  font-family: 'Inter', sans-serif;
+  max-width: 520px;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 12px 20px rgb(0 0 0 / 0.08);
+}
+
+/* Header */
+.va-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  color: #166534;
+}
+
+.va-header h1 {
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+/* Balance box */
+.balance-box {
+  background-color: #ecfdf5;
+  border: 1px solid #22c55e;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #166534;
+}
+
+.balance-label {
+  opacity: 0.75;
+  font-weight: 500;
+}
+
+.balance-amount {
+  font-weight: 700;
+}
