@@ -139,46 +139,44 @@
             <div class="transaction-list">
                 @foreach($transactions as $transaction)
                     @if($transaction instanceof \App\Models\TransferValas)
-                    <!-- Valas Transaction -->
-                    <div class="transaction-item">
-                        <div class="transaction-info">
-                            <div class="transaction-icon valas">
-                                <i class="fas fa-globe-asia"></i>
+                        <!-- Valas Transaction -->
+                        <div class="transaction-item">
+                            <div class="transaction-info">
+                                <div class="transaction-icon debit">
+                                    <i class="fas fa-globe-asia"></i>
+                                </div>
+                                <div class="transaction-details">
+                                    <span class="transaction-name">Transfer Valas ke {{ $transaction->recipient_bank }}</span>
+                                    <span class="transaction-date">{{ $transaction->created_at->format('d M Y, H:i') }}</span>
+                                    <span class="transaction-currency">{{ $transaction->amount_valas }} {{ $transaction->currency }}</span>
+                                </div>
                             </div>
-                            <div class="transaction-details">
-                                <span class="transaction-name">Transfer Valas ke {{ $transaction->recipient_bank }}</span>
-                                <span class="transaction-date">{{ $transaction->created_at->format('d M Y, H:i') }}</span>
-                                <span class="transaction-currency">{{ $transaction->amount_valas }} {{ $transaction->currency }}</span>
-                            </div>
+                            <span class="transaction-amount amount-debit">-Rp {{ number_format($transaction->amount_idr, 0, ',', '.') }}</span>
                         </div>
-                        <span class="transaction-amount amount-debit">-Rp {{ number_format($transaction->amount_idr, 0, ',', '.') }}</span>
-                    </div>
                     @else
-                    <!-- Regular Transaction -->
-                    <div class="transaction-item">
-                        <div class="transaction-info">
-                            <div class="transaction-icon {{ $transaction->type == 'credit' ? 'credit' : 'debit' }}">
-                                <i class="fas fa-{{ $transaction->type == 'credit' ? 'arrow-down' : 'arrow-up' }}"></i>
+                        <!-- Regular Transaction -->
+                        <div class="transaction-item">
+                            <div class="transaction-info">
+                                <div class="transaction-icon {{ $transaction->type == 'credit' ? 'credit' : 'debit' }}">
+                                    <i class="fas fa-{{ $transaction->type == 'credit' ? 'arrow-down' : 'arrow-up' }}"></i>
+                                </div>
+                                <div class="transaction-details">
+                                    <span class="transaction-name">{{ $transaction->description }}</span>
+                                    <span class="transaction-date">{{ $transaction->created_at->format('d M Y, H:i') }}</span>
+                                </div>
                             </div>
-                            <div class="transaction-details">
-                                <span class="transaction-name">{{ $transaction->description }}</span>
-                                <span class="transaction-date">{{ $transaction->created_at->format('d M Y, H:i') }}</span>
+                            <span class="transaction-amount {{ $transaction->type == 'credit' ? 'amount-credit' : 'amount-debit' }}">
+                                {{ $transaction->type == 'credit' ? '+' : '-' }}Rp {{ number_format($transaction->amount, 0, ',', '.') }}
                             </div>
                         </div>
-                        <span class="transaction-amount {{ $transaction->type == 'credit' ? 'amount-credit' : 'amount-debit' }}">
-                            {{ $transaction->type == 'credit' ? '+' : '-' }}Rp {{ number_format($transaction->amount, 0, ',', '.') }}
-                        </span>
-                    </div>
                     @endif
                 @endforeach
             </div>
         @else
-            @if(!session('success'))
             <div class="no-transactions">
                 <i class="fas fa-receipt"></i>
                 <p>Belum ada transaksi</p>
             </div>
-            @endif
         @endif
     </div>
 </main>
