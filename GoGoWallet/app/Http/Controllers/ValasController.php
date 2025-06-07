@@ -27,26 +27,26 @@ class ValasController extends Controller
             'amount_idr.min' => 'Jumlah transfer minimal Rp 10.000',
         ];
 
-        $request->validate([
-            'account_number' => 'required|string',
-            'recipient_bank' => 'required|string',
-            'currency' => 'required|in:USD,SGD,JPY',
-            'amount_idr' => 'required|numeric|min:10000',
-            'exchange_rate' => 'required|numeric',
-            'amount_valas' => 'required|numeric'
-        ], $messages);
-
-        $sender = Auth::user();
-        $amount = $request->amount_idr;
-
-        // Check if sender has sufficient balance
-        if ($sender->balance < $amount) {
-            return back()->withErrors([
-                'amount_idr' => 'Saldo anda tidak mencukupi untuk melakukan transfer ini'
-            ]);
-        }
-
         try {
+            $request->validate([
+                'account_number' => 'required|string',
+                'recipient_bank' => 'required|string',
+                'currency' => 'required|in:USD,SGD,JPY',
+                'amount_idr' => 'required|numeric|min:10000',
+                'exchange_rate' => 'required|numeric',
+                'amount_valas' => 'required|numeric'
+            ], $messages);
+
+            $sender = Auth::user();
+            $amount = $request->amount_idr;
+
+            // Check if sender has sufficient balance
+            if ($sender->balance < $amount) {
+                return back()->withErrors([
+                    'general' => 'Saldo anda tidak mencukupi untuk melakukan transfer ini'
+                ])->withInput();
+            }
+
             DB::beginTransaction();
 
             // Record valas transfer

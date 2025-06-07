@@ -10,9 +10,9 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TagihanController;
 use Illuminate\Http\Request;
 
-// Default route redirecting to register
+// Default route redirecting to login
 Route::get('/', function () {
-    return redirect('/register');
+    return redirect('/login');
 });
 
 // Guest routes (unprotected)

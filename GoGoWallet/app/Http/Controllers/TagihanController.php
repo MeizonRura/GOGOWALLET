@@ -11,17 +11,17 @@ class TagihanController extends Controller
 {
     public function index()
     {
-        $myTagihan = Tagihan::where('user_id', auth()->id())->latest()->get();
-        $tagihanKepadaSaya = Tagihan::where('nomor_rekening', auth()->user()->account_number)
-            ->where('status_dibayar', false)
-            ->latest()
-            ->get();
+        // Get tagihan that I created (sent)
         $tagihanTerkirim = Tagihan::where('user_id', auth()->id())
-            ->where('status_dibayar', false)
-            ->latest()
+            ->latest()  // Remove status_dibayar filter
+            ->get();
+
+        // Get tagihan addressed to my account number (received)
+        $tagihanKepadaSaya = Tagihan::where('nomor_rekening', auth()->user()->account_number)
+            ->latest()  // Remove status_dibayar filter
             ->get();
         
-        return view('tagihan.index', compact('myTagihan', 'tagihanKepadaSaya', 'tagihanTerkirim'));
+        return view('tagihan.index', compact('tagihanKepadaSaya', 'tagihanTerkirim'));
     }
 
     public function create()

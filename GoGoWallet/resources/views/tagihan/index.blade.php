@@ -117,17 +117,20 @@
             <div id="terima-tab" class="tab-content">
                 <div class="tagihan-list">
                     @forelse ($tagihanKepadaSaya as $tagihan)
-                        <div class="tagihan-item">
+                        <div class="tagihan-item {{ $tagihan->status_dibayar ? 'paid' : '' }}">
                             <div class="tagihan-info">
                                 <div class="tagihan-details">
                                     <h3>Tagihan dari {{ $tagihan->user->name }}</h3>
                                     <p class="description">{{ $tagihan->deskripsi }}</p>
                                     <p class="date">{{ $tagihan->created_at->format('d M Y, H:i') }}</p>
+                                    @if($tagihan->status_dibayar)
+                                        <p class="payment-date">Dibayar pada: {{ $tagihan->updated_at->format('d M Y, H:i') }}</p>
+                                    @endif
                                 </div>
                                 <div class="tagihan-amount">
                                     <span class="amount">Rp {{ number_format($tagihan->nominal_tagihan, 0, ',', '.') }}</span>
                                     <span class="status {{ $tagihan->status_dibayar ? 'paid' : 'unpaid' }}">
-                                        {{ $tagihan->status_dibayar ? 'Dibayar' : 'Belum Dibayar' }}
+                                        {{ $tagihan->status_dibayar ? 'Sudah Dibayar' : 'Belum Dibayar' }}
                                     </span>
                                 </div>
                             </div>
@@ -195,6 +198,10 @@
             // Show selected tab content and activate button
             document.getElementById(tabName + '-tab').classList.add('active');
             event.currentTarget.classList.add('active');
+        }
+
+        function setAmount(amount) {
+            document.getElementById('nominal_tagihan').value = amount;
         }
     </script>
 </body>

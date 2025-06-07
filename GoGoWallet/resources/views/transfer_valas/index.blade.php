@@ -33,11 +33,15 @@
         <!-- Error messages -->
         @if ($errors->any())
             <div class="alert alert-error">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+                @if($errors->has('general'))
+                    {{ $errors->first('general') }}
+                @else
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
         @endif
 
@@ -233,14 +237,28 @@
         }
 
         document.getElementById('valasForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form submission first
+            
             const amount = parseFloat(document.getElementById('amount_idr').value);
             const balance = parseFloat('{{ auth()->user()->balance }}');
+            const errorContainer = document.querySelector('.alert.alert-error') || createErrorContainer();
             
             if (amount > balance) {
-                e.preventDefault();
-                alert('Saldo anda tidak mencukupi untuk melakukan transfer ini');
+                errorContainer.innerHTML = 'Saldo anda tidak mencukupi untuk melakukan transfer ini';
+                if (!document.querySelector('.alert.alert-error')) {
+                    document.querySelector('.sender-info').insertAdjacentElement('afterend', errorContainer);
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                this.submit(); // Submit form if balance is sufficient
             }
         });
+
+        function createErrorContainer() {
+            const div = document.createElement('div');
+            div.className = 'alert alert-error';
+            return div;
+        }
     </script>
 </body>
 </html>

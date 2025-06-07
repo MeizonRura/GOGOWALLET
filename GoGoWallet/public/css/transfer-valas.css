@@ -369,3 +369,16 @@ textarea:focus {
 #recipient_bank:hover {
     border-color: #00bd6f;
 }
+
+/* Alert Styles */
+.alert {
+    padding: 1rem;
+    border-radius: 12px;
+    margin: 1rem 0;
+}
+
+.alert-error {
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #991b1b;
+}
