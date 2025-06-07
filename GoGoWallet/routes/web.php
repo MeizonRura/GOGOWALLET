@@ -10,6 +10,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TagihanController;
 use Illuminate\Http\Request;
 
+
 // Default route redirecting to login
 Route::get('/', function () {
     return redirect('/login');
@@ -25,7 +26,9 @@ Route::middleware('guest')->group(function () {
 
 // Protected routes
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     
     // Transfer routes
@@ -50,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/pembayaran/sukses', function() {
         return view('payment.sukses');
     })->name('pembayaran.sukses');
+
     
     // Tagihan routes
     Route::get('/tagihan', [TagihanController::class, 'index'])->name('tagihan.index');

@@ -37,6 +37,7 @@ class PaymentController extends Controller
             'amount' => $amount,
             'description' => 'Payment for Virtual Account ' . $request->va_number
         ]);
+
     }
 
     public function store(Request $request)

@@ -194,6 +194,7 @@
             {{ session('success') }}
         </div>
     @endif
+    
 </main>
 </body>
 </html>
