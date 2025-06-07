@@ -24,7 +24,7 @@
             <div class="sender-info">
                 <div class="account-balance">
                     <span class="label">Saldo Tersedia</span>
-                    <span class="amount">Rp 5,000,000</span>
+                    <span class="amount">Rp {{ number_format(auth()->user()->balance, 0, ',', '.') }}</span>
                 </div>
                 <div class="account-number">
                     <span class="label">Nomor Rekening Anda</span>
@@ -67,7 +67,21 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <!-- Quick amounts moved here -->
+                <div class="quick-amounts">
+                    <h3>Transfer Cepat</h3>
+                    <div class="amount-grid">
+                        <button type="button" class="amount-item" onclick="setAmount(50000)">Rp 50.000</button>
+                        <button type="button" class="amount-item" onclick="setAmount(100000)">Rp 100.000</button>
+                        <button type="button" class="amount-item" onclick="setAmount(250000)">Rp 250.000</button>
+                        <button type="button" class="amount-item" onclick="setAmount(500000)">Rp 500.000</button>
+                        <button type="button" class="amount-item" onclick="setAmount(1000000)">Rp 1.000.000</button>
+                        <button type="button" class="amount-item" onclick="setAmount(2500000)">Rp 2.500.000</button>
+                    </div>
+                </div>
+
+                <!-- Added margin-top here -->
+                <div class="form-group" style="margin-top: 2rem;">
                     <label for="note">Catatan (Opsional)</label>
                     <textarea 
                         id="note" 
@@ -82,19 +96,6 @@
                     <i class="fas fa-arrow-right"></i>
                 </button>
             </form>
-
-            <!-- Quick amounts -->
-            <div class="quick-amounts">
-                <h3>Transfer Cepat</h3>
-                <div class="amount-grid">
-                    <button type="button" class="amount-item" onclick="setAmount(50000)">Rp 50.000</button>
-                    <button type="button" class="amount-item" onclick="setAmount(100000)">Rp 100.000</button>
-                    <button type="button" class="amount-item" onclick="setAmount(250000)">Rp 250.000</button>
-                    <button type="button" class="amount-item" onclick="setAmount(500000)">Rp 500.000</button>
-                    <button type="button" class="amount-item" onclick="setAmount(1000000)">Rp 1.000.000</button>
-                    <button type="button" class="amount-item" onclick="setAmount(2500000)">Rp 2.500.000</button>
-                </div>
-            </div>
         </div>
     </div>
 

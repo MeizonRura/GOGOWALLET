@@ -20,24 +20,21 @@ class TagihanController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input
         $validated = $request->validate([
-            'nama_rekening' => 'required',
-            'nomor_rekening' => 'required',
-            'nominal_tagihan' => 'required|numeric',
-            'deskripsi' => 'required',
+            'nomor_rekening' => 'required|string',
+            'nominal_tagihan' => 'required|numeric|min:1000',
+            'deskripsi' => 'required|string',
         ]);
 
-        // Simpan ke database
         Tagihan::create([
-            'nama_rekening' => $validated['nama_rekening'],
             'nomor_rekening' => $validated['nomor_rekening'],
             'nominal_tagihan' => $validated['nominal_tagihan'],
             'deskripsi' => $validated['deskripsi'],
             'status_dibayar' => false,
         ]);
 
-        return redirect()->route('tagihan.index')->with('success', 'Tagihan berhasil ditambahkan.');
+        return redirect()->route('tagihan.index')
+            ->with('success', 'Tagihan berhasil ditambahkan.');
     }
 
     public function markAsPaid($id)
@@ -46,6 +43,7 @@ class TagihanController extends Controller
         $tagihan->status_dibayar = true;
         $tagihan->save();
 
-        return redirect()->route('tagihan.index')->with('success', 'Tagihan telah ditandai sebagai dibayar.');
+        return redirect()->route('tagihan.index')
+            ->with('success', 'Tagihan telah ditandai sebagai dibayar.');
     }
 }

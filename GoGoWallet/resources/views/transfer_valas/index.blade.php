@@ -1,107 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transfer Valas - GoGoWallet</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/transfer-valas.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
-<body class="bg-gray-50 font-inter">
+<body>
+    <div class="transfer-container">
+        <!-- Header with back button -->
+        <header class="transfer-header">
+            <a href="{{ route('dashboard') }}" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1>Transfer Valas</h1>
+        </header>
 
-<div class="transfer-container">
+        <!-- Main transfer form -->
+        <div class="transfer-card">
+            <!-- Sender info -->
+            <div class="sender-info">
+                <div class="account-balance">
+                    <span class="label">Saldo Tersedia</span>
+                    <span class="amount">Rp {{ number_format(auth()->user()->balance, 0, ',', '.') }}</span>
+                </div>
+                <div class="account-number">
+                    <span class="label">Nomor Rekening Anda</span>
+                    <span class="number">{{ auth()->user()->account_number }}</span>
+                </div>
+            </div>
 
-    <!-- Header dengan tombol kembali -->
-    <header class="transfer-header">
-        <a href="{{ route('dashboard') }}" class="back-button" title="Kembali ke Dashboard">
-            <i class="fas fa-arrow-left"></i>
-        </a>
-        <h1 class="title">Transfer Valas</h1>
-    </header>
+            <!-- Transfer form -->
+            <form action="{{ route('transfer-valas.store') }}" method="POST" class="transfer-form">
+                @csrf
+                <div class="form-group">
+                    <label for="currency">Pilih Mata Uang</label>
+                    <select name="currency" id="currency" class="form-select" required>
+                        <option value="">Pilih mata uang</option>
+                        <option value="USD">USD - Dollar Amerika</option>
+                        <option value="SGD">SGD - Dollar Singapura</option>
+                        <option value="JPY">JPY - Yen Jepang</option>
+                    </select>
+                </div>
 
-    <!-- Form Transfer Valas -->
-    @if(session('success'))
-        <div class="alert-success">
-            {{ session('success') }}
+                <div class="form-group">
+                    <label for="amount_idr">Jumlah dalam Rupiah</label>
+                    <div class="input-group currency">
+                        <span class="currency-symbol">Rp</span>
+                        <input 
+                            type="number" 
+                            id="amount_idr" 
+                            name="amount_idr" 
+                            required
+                            placeholder="0"
+                            min="10000"
+                            step="1000"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="exchange_rate">Rate Tukar (1 Valas = IDR)</label>
+                    <div class="input-group currency">
+                        <span class="currency-symbol">Rp</span>
+                        <input 
+                            type="number" 
+                            id="exchange_rate" 
+                            name="exchange_rate" 
+                            required
+                            placeholder="0"
+                            step="0.01"
+                            readonly
+                            class="readonly-input"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount_valas">Jumlah dalam Valas</label>
+                    <div class="input-group currency">
+                        <span class="currency-symbol" id="selected-currency-symbol">$</span>
+                        <input 
+                            type="number" 
+                            id="amount_valas" 
+                            name="amount_valas" 
+                            readonly
+                            placeholder="0"
+                            step="0.01"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="recipient_bank">Bank Tujuan</label>
+                    <select name="recipient_bank" id="recipient_bank" class="form-select" required>
+                        <option value="">Pilih bank tujuan</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="recipient_account">Nomor Rekening Tujuan</label>
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="recipient_account" 
+                            name="account_number" 
+                            required
+                            placeholder="Masukkan nomor rekening tujuan"
+                        >
+                    </div>
+                </div>
+
+                <div class="quick-amounts">
+                    <h3>Transfer Cepat</h3>
+                    <div class="amount-grid">
+                        <button type="button" class="amount-item" onclick="setAmount(100000)">Rp 100.000</button>
+                        <button type="button" class="amount-item" onclick="setAmount(500000)">Rp 500.000</button>
+                        <button type="button" class="amount-item" onclick="setAmount(1000000)">Rp 1.000.000</button>
+                        <button type="button" class="amount-item" onclick="setAmount(2500000)">Rp 2.500.000</button>
+                        <button type="button" class="amount-item" onclick="setAmount(5000000)">Rp 5.000.000</button>
+                        <button type="button" class="amount-item" onclick="setAmount(10000000)">Rp 10.000.000</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    <span>Lanjutkan Transfer</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <!-- Quick amounts -->
+            
         </div>
-    @endif
+    </div>
 
-    <form action="{{ route('transfer-valas.store') }}" method="POST" class="transfer-form">
-        @csrf
-        <div class="form-group">
-            <label for="recipient_name">Nama Penerima</label>
-            <input type="text" id="recipient_name" name="recipient_name" required value="{{ old('recipient_name') }}">
-            @error('recipient_name') <p class="error-msg">{{ $message }}</p> @enderror
-        </div>
+    <script>
+        // Exchange rates (in real app, these would come from an API)
+        const exchangeRates = {
+            'USD': 15500,
+            'SGD': 11500,
+            'JPY': 105
+        };
 
-        <div class="form-group">
-            <label for="recipient_bank">Bank</label>
-            <input type="text" id="recipient_bank" name="recipient_bank" required value="{{ old('recipient_bank') }}">
-            @error('recipient_bank') <p class="error-msg">{{ $message }}</p> @enderror
-        </div>
+        // Bank lists per currency
+        const banksByCountry = {
+            'USD': [
+                { code: 'chase', name: 'Chase Bank' },
+                { code: 'citi', name: 'Citibank' },
+                { code: 'boa', name: 'Bank of America' }
+            ],
+            'SGD': [
+                { code: 'dbs', name: 'DBS Bank' },
+                { code: 'ocbc', name: 'OCBC Bank' },
+                { code: 'uob', name: 'UOB Bank' }
+            ],
+            'JPY': [
+                { code: 'mufg', name: 'MUFG Bank' },
+                { code: 'mizuho', name: 'Mizuho Bank' },
+                { code: 'smbc', name: 'SMBC Bank' }
+            ]
+        };
 
-        <div class="form-group">
-            <label for="currency">Mata Uang</label>
-            <select id="currency" name="currency" required>
-                <option value="">-- Pilih Mata Uang --</option>
-                <option value="USD" {{ old('currency') == 'USD' ? 'selected' : '' }}>USD (US Dollar)</option>
-                <option value="SGD" {{ old('currency') == 'SGD' ? 'selected' : '' }}>SGD (Singapore Dollar)</option>
-                <option value="JPY" {{ old('currency') == 'JPY' ? 'selected' : '' }}>JPY (Japanese Yen)</option>
-            </select>
-            @error('currency') <p class="error-msg">{{ $message }}</p> @enderror
-        </div>
+        // Currency symbols
+        const currencySymbols = {
+            'USD': '$',
+            'SGD': 'S$',
+            'JPY': '¥'
+        };
 
-        <div class="form-group">
-            <label for="amount">Jumlah</label>
-            <input type="number" step="0.01" id="amount" name="amount" required value="{{ old('amount') }}" min="0">
-            @error('amount') <p class="error-msg">{{ $message }}</p> @enderror
-        </div>
-        <button type="submit" class="btn-submit">
-            Transfer
-            <i class="fas fa-paper-plane ml-2"></i>
-        </button>
-    </form>
+        document.getElementById('currency').addEventListener('change', function() {
+            const selectedCurrency = this.value;
+            if (!selectedCurrency) return;
 
-    <!-- Riwayat Transfer -->
-    <h2 class="history-title">Riwayat Transfer Valas</h2>
+            // Update exchange rate
+            document.getElementById('exchange_rate').value = exchangeRates[selectedCurrency];
+            
+            // Update currency symbol
+            document.getElementById('selected-currency-symbol').textContent = currencySymbols[selectedCurrency];
+            
+            // Update bank options
+            updateBankOptions(selectedCurrency);
+            
+            // Recalculate amount if IDR is already filled
+            calculateConversion();
+        });
 
-    @if($transfers->isEmpty())
-        <p class="empty-msg">Belum ada riwayat transfer valas.</p>
-    @else
-        <div class="table-wrapper">
-            <table class="transfer-table">
-                <thead>
-                    <tr>
-                        <th class="border px-3 py-2">Nama Penerima</th>
-                        <th class="border px-3 py-2">Bank</th>
-                        <th class="border px-3 py-2">Mata Uang</th>
-                        <th class="border px-3 py-2 text-right">Jumlah</th>
-                        <th class="border px-3 py-2 text-right">Rate</th>
-                        <th class="border px-3 py-2 text-right">Total (IDR)</th>
-                        <th class="border px-3 py-2">Tanggal</th>
-                        <th class="border px-3 py-2">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($transfers as $t)
-                    <tr>
-                        <td class="border px-3 py-2">{{ $t->recipient_name }}</td>
-                        <td class="border px-3 py-2">{{ $t->recipient_bank }}</td>
-                        <td class="border px-3 py-2">{{ $t->currency }}</td>
-                        <td class="border px-3 py-2 text-right">{{ number_format($t->amount, 2) }}</td>
-                        <td class="border px-3 py-2 text-right">{{ number_format($t->exchange_rate, 4) }}</td>
-                        <td class="border px-3 py-2 text-right">{{ number_format($t->total_in_local, 2) }}</td>
-                        <td class="border px-3 py-2">{{ $t->transfer_date }}</td>
-                        <td class="border px-3 py-2">{{ ucfirst($t->status) }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    @endif
+        document.getElementById('amount_idr').addEventListener('input', calculateConversion);
+        document.getElementById('exchange_rate').addEventListener('input', calculateConversion);
 
-</div>
+        function setAmount(amount) {
+            document.getElementById('amount_idr').value = amount;
+            calculateConversion();
+        }
 
+        function calculateConversion() {
+            const amountIDR = parseFloat(document.getElementById('amount_idr').value) || 0;
+            const exchangeRate = parseFloat(document.getElementById('exchange_rate').value) || 0;
+            
+            if (amountIDR && exchangeRate) {
+                const amountValas = amountIDR / exchangeRate;
+                document.getElementById('amount_valas').value = amountValas.toFixed(2);
+            }
+        }
+
+        function updateBankOptions(currency) {
+            const bankSelect = document.getElementById('recipient_bank');
+            const banks = banksByCountry[currency];
+            
+            // Clear existing options except first one
+            bankSelect.innerHTML = '<option value="">Pilih bank tujuan</option>';
+            
+            // Add new options based on selected currency
+            banks.forEach(bank => {
+                const option = document.createElement('option');
+                option.value = bank.code;
+                option.textContent = bank.name;
+                bankSelect.appendChild(option);
+            });
+        }
+    </script>
 </body>
 </html>

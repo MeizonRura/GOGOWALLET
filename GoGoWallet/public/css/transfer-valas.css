@@ -1,4 +1,4 @@
-/* --- RESET & BASE --- */
+/* Base styles */
 * {
     margin: 0;
     padding: 0;
@@ -10,217 +10,362 @@ body {
     background: linear-gradient(135deg, #f3f4f6 0%, #ffffff 100%);
     min-height: 100vh;
     padding: 1rem;
-    color: #1a1a1a;
 }
 
-/* --- CONTAINER --- */
+/* Container */
 .transfer-container {
-    max-width: 420px;
-    margin: 2.5rem auto;
-    padding: 0 0 2rem 0;
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 4px 32px rgba(0,0,0,0.09);
-    overflow: hidden;
+    max-width: 600px;
+    margin: 0 auto;
+    padding-top: 1rem;
 }
 
-/* --- HEADER HIJAU --- */
+/* Header */
 .transfer-header {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: linear-gradient(90deg, #47b556 0%, #1eaa42 100%);
-    padding: 1.2rem 1.5rem 1.2rem 1.2rem;
-    border-radius: 0 0 22px 22px;
     margin-bottom: 2rem;
 }
 
 .back-button {
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.25);
+    background: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: #1a1a1a;
     text-decoration: none;
-    font-size: 1.2rem;
-    border: none;
-    box-shadow: none;
-    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
 }
 
 .back-button:hover {
-    background: rgba(255,255,255,0.38);
+    transform: translateX(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .transfer-header h1 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 0.01em;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
 }
 
-/* --- FORM --- */
+/* Transfer Card */
+.transfer-card {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+/* Sender Info */
+.sender-info {
+    background: linear-gradient(135deg, #00bd6f 0%, #009d5c 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.account-balance {
+    margin-bottom: 1rem;
+}
+
+.account-balance .label,
+.account-number .label {
+    display: block;
+    font-size: 0.875rem;
+    opacity: 0.9;
+    margin-bottom: 0.25rem;
+}
+
+.account-balance .amount {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.account-number .number {
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Form Styles */
 .transfer-form {
-    padding: 0 1.2rem;
+    margin-bottom: 2rem;
 }
 
 .form-group {
-    margin-bottom: 1.35rem;
+    margin-bottom: 1.5rem;
 }
 
 .form-group label {
     display: block;
-    font-weight: 600;
-    margin-bottom: 0.4rem;
-    color: #23223a;
-    font-size: 1.01rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
 }
 
-.form-group input,
-.form-group select {
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-group input,
+.form-group textarea {
     width: 100%;
-    font-size: 1.02rem;
-    padding: 0.85rem 1.1rem;
-    background: #f7f8fa;
-    border: 1.8px solid #d4e8d7;
-    border-radius: 10px;
-    outline: none;
-    color: #23223a;
-    transition: border-color 0.2s, box-shadow 0.18s;
-    font-family: inherit;
-    box-shadow: 0 1px 14px rgba(60,170,60,0.06);
+    padding: 0.875rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
-.form-group input:focus,
-.form-group select:focus {
-    border-color: #48b857;
-    background: #f6fcf7;
-    box-shadow: 0 2px 16px rgba(60,170,60,0.11);
+.input-group.currency {
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 2px solid #e5e7eb;
 }
 
-.form-group input:disabled,
-.form-group select:disabled {
-    background: #f3f4f6;
-    opacity: 0.7;
-    cursor: not-allowed;
+.currency-symbol {
+    padding: 0 1rem;
+    color: #1a1a1a;
+    font-weight: 500;
 }
 
-.form-group .input-helper {
-    font-size: 0.92rem;
-    color: #929292;
-    margin-top: 0.25rem;
-    margin-bottom: 0;
-    display: block;
-    font-weight: 400;
+.input-group.currency input {
+    border: none;
+    background: transparent;
 }
 
-/* Custom select arrow */
-.form-group select {
+/* Form Select Styles */
+.form-select {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: #f8fafc;
     appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,<svg width='16' height='16' fill='gray' xmlns='http://www.w3.org/2000/svg'><path d='M4 6l4 4 4-4'/></svg>");
+    color: #1a1a1a;
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 1rem center;
-    background-size: 18px 18px;
-    cursor: pointer;
+    background-size: 1.5em 1.5em;
 }
 
-/* --- Dropdown Large --- */
-.form-group select:focus option,
-.form-group select option {
-    font-size: 1rem;
-    padding: 0.6rem 0.7rem;
-    color: #23223a;
+.form-select:focus,
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #00bd6f;
+    box-shadow: 0 0 0 3px rgba(0,189,111,0.1);
 }
 
-.form-group select option[disabled] {
-    color: #666;
-    background: #eee;
-}
-
-.form-group select option {
-    padding: 0.3rem 0.6rem;
-}
-
-.form-group select optgroup {
-    font-weight: 600;
-    color: #47b556;
-}
-
-/* --- BUTTON --- */
-.btn-submit {
+/* Submit Button */
+.submit-button {
     width: 100%;
-    background: linear-gradient(90deg, #47b556 0%, #1eaa42 100%);
-    color: #fff;
+    padding: 1rem;
+    background: #00bd6f;
+    color: white;
     border: none;
-    padding: 1rem 0;
-    border-radius: 13px;
-    font-weight: 700;
-    font-size: 1.09rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
     cursor: pointer;
-    margin-top: 0.5rem;
-    margin-bottom: 0.8rem;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.7rem;
-    letter-spacing: 0.02em;
-    box-shadow: 0 8px 28px 0 rgba(60,170,60,0.04);
-    transition: background 0.18s, transform 0.13s;
+    gap: 0.5rem;
 }
 
-.btn-submit i {
-    font-size: 1.1em;
+.submit-button:hover {
+    background: #00a15f;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,189,111,0.2);
 }
 
-.btn-submit:hover {
-    background: linear-gradient(90deg, #36a44b 0%, #158b35 100%);
-    transform: translateY(-1px) scale(1.013);
+/* Quick Amounts */
+.quick-amounts {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1.5rem;
+    margin-bottom: 2rem;
 }
 
-/* --- RIWAYAT --- */
-.history-title {
-    color: #36a44b;
+.quick-amounts h3 {
     font-size: 1rem;
-    font-weight: 700;
-    margin-top: 1.6rem;
-    margin-bottom: 0.7rem;
-    padding-left: 1.2rem;
-    letter-spacing: 0.01em;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
 }
 
-.empty-msg {
-    color: #a1a1aa;
-    font-style: italic;
-    margin-left: 1.2rem;
+.amount-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.amount-item {
+    padding: 0.75rem;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.amount-item:hover {
+    background: #f0fdf4;
+    border-color: #00bd6f;
+    color: #00bd6f;
+}
+
+.quick-amounts + .form-group {
+    margin-top: 2rem;
+}
+
+/* Bank Options */
+.bank-options {
     margin-bottom: 1.5rem;
-    font-size: 0.97rem;
 }
 
-/* --- Responsive --- */
-@media (max-width: 500px) {
-    .transfer-container {
-        max-width: 100vw;
-        border-radius: 0;
-        box-shadow: none;
-        margin: 0;
-    }
-    .transfer-form, .history-title, .empty-msg {
-        padding-left: 0.7rem;
-        padding-right: 0.7rem;
-    }
-    .transfer-header {
-        padding: 1rem 0.7rem;
+.bank-option {
+    display: block;
+    padding: 0.875rem 1rem;
+    background: #f8fafc;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.bank-option input {
+    display: none;
+}
+
+.bank-option span {
+    font-size: 1rem;
+    color: #1a1a1a;
+}
+
+.bank-option:hover {
+    background: #f0fdf4;
+    border-color: #00bd6f;
+}
+
+.bank-option input:checked + span {
+    color: #00bd6f;
+    font-weight: 500;
+}
+
+.bank-option input:checked + .bank-option {
+    background: #f0fdf4;
+    border-color: #00bd6f;
+}
+
+/* Animation for bank options */
+.bank-option {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUp 0.3s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-/* Error message */
-.error-msg {
-    color: #e11d48;
-    font-size: 0.95rem;
-    margin-top: 0.22rem;
+@media (max-width: 640px) {
+    .transfer-card {
+        padding: 1.5rem;
+        border-radius: 20px;
+    }
+
+    .amount-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sender-info {
+        padding: 1.25rem;
+    }
+
+    .bank-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Exchange Rate Field */
+.form-group.exchange-rate {
+    margin-bottom: 1.5rem;
+}
+
+.exchange-rate label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+}
+
+/* Readonly Input Styles */
+.readonly-input {
+    background-color: #f8fafc !important;
+    cursor: not-allowed !important;
+    color: #64748b;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.readonly-input:focus {
+    border-color: #e5e7eb !important;
+    box-shadow: none !important;
+}
+
+/* Remove spinners for readonly number input */
+.readonly-input::-webkit-outer-spin-button,
+.readonly-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.readonly-input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Bank Select Styles */
+#recipient_bank {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: #f8fafc;
+    appearance: none;
+    color: #1a1a1a;
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.5em 1.5em;
+}
+
+#recipient_bank:focus {
+    outline: none;
+    border-color: #00bd6f;
+    box-shadow: 0 0 0 3px rgba(0,189,111,0.1);
+}
+
+#recipient_bank:hover {
+    border-color: #00bd6f;
 }

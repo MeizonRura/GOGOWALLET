@@ -11,12 +11,8 @@ class TransferController extends Controller
     public function show()
     {
         $user = Auth::user();
-        // Here you would typically get the actual balance from your database
-        $balance = 5000000; // Placeholder balance
-        
         return view('transfer', [
-            'user' => $user,
-            'balance' => $balance
+            'user' => $user
         ]);
     }
 

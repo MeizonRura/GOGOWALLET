@@ -12,15 +12,14 @@ body {
     padding: 1rem;
 }
 
-/* Container */
-.transfer-container {
+.tagihan-container {
     max-width: 600px;
     margin: 0 auto;
     padding-top: 1rem;
 }
 
 /* Header */
-.transfer-header {
+.tagihan-header {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -46,54 +45,189 @@ body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.transfer-header h1 {
+.tagihan-header h1 {
     font-size: 1.5rem;
     font-weight: 600;
     color: #1a1a1a;
 }
 
-/* Transfer Card */
-.transfer-card {
+/* Card */
+.tagihan-card {
     background: white;
     border-radius: 24px;
     padding: 2rem;
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
-/* Sender Info */
-.sender-info {
-    background: linear-gradient(135deg, #00bd6f 0%, #009d5c 100%);
-    border-radius: 16px;
-    padding: 1.5rem;
-    color: white;
+/* Header Actions */
+.header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 2rem;
 }
 
-.account-balance {
+.header-actions h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.create-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: #00bd6f;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.create-button:hover {
+    background: #00a15f;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,189,111,0.2);
+}
+
+/* Alert Messages */
+.alert {
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+}
+
+.alert-success {
+    background: #f0fdf4;
+    border: 1px solid #00bd6f;
+    color: #00bd6f;
+}
+
+.alert-error {
+    background: #fef2f2;
+    border: 1px solid #dc2626;
+    color: #dc2626;
+}
+
+/* Tagihan List */
+.tagihan-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.tagihan-item {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.tagihan-item:hover {
+    border-color: #00bd6f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.tagihan-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 1rem;
 }
 
-.account-balance .label,
-.account-number .label {
-    display: block;
-    font-size: 0.875rem;
-    opacity: 0.9;
+.tagihan-details h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
     margin-bottom: 0.25rem;
 }
 
-.account-balance .amount {
-    font-size: 1.5rem;
-    font-weight: 600;
+.account-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-bottom: 0.5rem;
 }
 
-.account-number .number {
-    font-size: 1rem;
+.description {
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.tagihan-amount {
+    text-align: right;
+}
+
+.amount {
+    display: block;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #00bd6f;
+    margin-bottom: 0.25rem;
+}
+
+.status {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: 0.5px;
+}
+
+.status.paid {
+    background: #f0fdf4;
+    color: #00bd6f;
+}
+
+.status.unpaid {
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+.pay-button {
+    width: 100%;
+    padding: 0.875rem;
+    background: #00bd6f;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.pay-button:hover {
+    background: #00a15f;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,189,111,0.2);
+}
+
+.no-tagihan {
+    text-align: center;
+    padding: 3rem 0;
+    color: #64748b;
+}
+
+.no-tagihan i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
 }
 
 /* Form Styles */
-.transfer-form {
+.tagihan-form {
     margin-bottom: 2rem;
 }
 
@@ -109,13 +243,7 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.input-group {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.input-group input,
+.form-group input,
 .form-group textarea {
     width: 100%;
     padding: 0.875rem 1rem;
@@ -125,7 +253,9 @@ body {
     transition: all 0.3s ease;
 }
 
-.input-group.currency {
+.input-group {
+    display: flex;
+    align-items: center;
     background: #f8fafc;
     border-radius: 12px;
     border: 2px solid #e5e7eb;
@@ -137,22 +267,12 @@ body {
     font-weight: 500;
 }
 
-.input-group.currency input {
+.input-group input {
     border: none;
     background: transparent;
 }
 
-.scan-qr {
-    position: absolute;
-    right: 0.5rem;
-    background: none;
-    border: none;
-    color: #00bd6f;
-    padding: 0.5rem;
-    cursor: pointer;
-}
-
-.form-group textarea {
+textarea {
     height: 100px;
     resize: none;
 }
@@ -230,16 +350,25 @@ textarea:focus {
 
 /* Responsive Design */
 @media (max-width: 640px) {
-    .transfer-card {
+    .tagihan-card {
         padding: 1.5rem;
         border-radius: 20px;
     }
 
-    .amount-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .tagihan-item {
+        padding: 1.25rem;
     }
 
-    .sender-info {
-        padding: 1.25rem;
+    .tagihan-info {
+        flex-direction: column;
+    }
+
+    .tagihan-amount {
+        text-align: left;
+        margin-top: 1rem;
+    }
+
+    .amount-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }

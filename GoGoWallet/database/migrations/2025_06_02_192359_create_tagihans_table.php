@@ -11,19 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-{
         Schema::create('tagihans', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_rekening');
-            $table->string('nama_rekening');
             $table->decimal('nominal_tagihan', 12, 2);
             $table->string('deskripsi');
             $table->boolean('status_dibayar')->default(false);
             $table->timestamps();
         });
-}
-
     }
 
     /**
