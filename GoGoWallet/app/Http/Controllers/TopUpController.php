@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\TopUp;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TopUpController extends Controller
 {
@@ -22,19 +24,38 @@ class TopUpController extends Controller
 
         $user = Auth::user();
         
-        // Create topup record
-        TopUp::create([
-            'user_id' => $user->id,
-            'amount' => $request->amount,
-            'status' => 'success',
-            'payment_method' => $request->bank
-        ]);
+        try {
+            DB::beginTransaction();
 
-        // Update user balance
-        $user->balance += $request->amount;
-        $user->save();
+            // Create topup record
+            TopUp::create([
+                'user_id' => $user->id,
+                'amount' => $request->amount,
+                'status' => 'success',
+                'payment_method' => $request->bank
+            ]);
 
-        return redirect()->route('dashboard')
-            ->with('success', 'Top Up berhasil! Saldo telah ditambahkan.');
+            // Update user balance
+            $user->balance += $request->amount;
+            $user->save();
+
+            // Create transaction record for top up
+            Transaction::create([
+                'sender_id' => $user->id,
+                'recipient_id' => $user->id,
+                'amount' => $request->amount,
+                'type' => 'topup',
+                'note' => 'Top Up via ' . strtoupper($request->bank),
+                'status' => 'success'
+            ]);
+
+            DB::commit();
+            return redirect()->route('dashboard')
+                ->with('success', 'Top Up berhasil! Saldo telah ditambahkan.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Gagal melakukan top up']);
+        }
     }
 }

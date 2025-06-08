@@ -11,7 +11,8 @@ class Tagihan extends Model
         'nomor_rekening',
         'nominal_tagihan',
         'deskripsi',
-        'status_dibayar'
+        'status_dibayar',
+        'status'
     ];
 
     public function user()

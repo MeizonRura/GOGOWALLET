@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,32 +41,43 @@
                 </div>
             @endif
 
-            <form id="vaForm" action="{{ route('pembayaran.checkVa') }}" method="POST" class="transfer-form">
-                @csrf
-                <div class="form-group">
-                    <label for="virtual_account">Virtual Account Number</label>
-                    <div class="input-group">
-                        <input type="text" 
-                               id="virtual_account" 
-                               name="virtual_account" 
-                               required
-                               value="{{ old('virtual_account') }}" 
-                               placeholder="Masukkan nomor Virtual Account"/>
-                    </div>
-                    @error('virtual_account')
-                        <p class="error-text">{{ $message }}</p>
-                    @enderror
-                </div>
+            <!-- History button moved above -->
+            <div class="history-section">
+                <a href="{{ route('pembayaran.index') }}" class="history-button">
+                    <i class="fas fa-history"></i>
+                    <span>Riwayat Pembayaran</span>
+                </a>
+            </div>
 
-                <button type="submit" class="submit-button">
-                    <span>Lanjut</span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
+            <!-- Form section -->
+            <div class="form-section">
+                <form id="vaForm" action="{{ route('pembayaran.checkVa') }}" method="POST" class="transfer-form">
+                    @csrf
+                    <label for="virtual_account">Virtual Account Number</label>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" 
+                                   id="virtual_account" 
+                                   name="virtual_account" 
+                                   required
+                                   value="{{ old('virtual_account') }}" 
+                                   placeholder="Masukkan nomor Virtual Account"/>
+                        </div>
+                        @error('virtual_account')
+                            <p class="error-text">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <button type="submit" class="submit-button">
+                        <span>Lanjut</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
 
                 @if(session('error'))
                     <p class="error-text">{{ session('error') }}</p>
                 @endif
-            </form>
+            </div>
         </div>
     </div>
 </body>

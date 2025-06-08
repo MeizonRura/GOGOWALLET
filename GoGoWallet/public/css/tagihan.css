@@ -179,6 +179,7 @@ body {
     margin-bottom: 0.25rem;
 }
 
+/* Status badges */
 .status {
     display: inline-block;
     padding: 0.25rem 0.75rem;
@@ -187,21 +188,32 @@ body {
     font-weight: 500;
 }
 
-.status.paid {
-    background: #f0fdf4;
-    color: #00bd6f;
-    border: 1px solid #00bd6f;
+/* Paid status - blue theme */
+.status-badge.success,
+.status.paid,
+span.status:has(+ .tagihan-item.paid),
+.tagihan-item.paid .status {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #2563eb;
 }
 
+/* Unpaid status - red theme */
 .status.unpaid {
     background: #fef2f2;
     color: #dc2626;
     border: 1px solid #dc2626;
 }
 
+/* Rejected status - red theme */
+.status.ditolak {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
 .payment-date {
     font-size: 0.75rem;
-    color: #00bd6f;
+    color: #64748b;
     margin-top: 0.25rem;
 }
 
@@ -407,6 +419,38 @@ textarea:focus {
     font-size: 0.75rem;
     color: #64748b;
     margin-top: 0.25rem;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.action-form {
+    flex: 1;
+}
+
+.reject-button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #dc2626;
+    background: white;
+    color: #dc2626;
+    border-radius: 8px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.reject-button:hover {
+    background: #dc2626;
+    color: white;
 }
 
 /* Responsive Design */

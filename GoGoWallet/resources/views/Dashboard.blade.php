@@ -142,13 +142,30 @@
                                         {{ $transaction->created_at->locale('id')->isoFormat('D MMMM Y, HH:mm') }}
                                     </span>
                                 </div>
+                            @elseif($transaction->type === 'topup')
+                                <!-- Top Up transaction -->
+                                <div class="transaction-icon credit">
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <div class="transaction-details">
+                                    <span class="transaction-name">Top Up Berhasil</span>
+                                    <span class="transaction-amount amount-credit">
+                                        +Rp {{ number_format($transaction->amount, 0, ',', '.') }}
+                                    </span>
+                                    <span class="transaction-date">
+                                        {{ $transaction->created_at->locale('id')->isoFormat('D MMMM Y, HH:mm') }}
+                                    </span>
+                                    @if($transaction->note)
+                                        <span class="transaction-note">{{ $transaction->note }}</span>
+                                    @endif
+                                </div>
                             @elseif($transaction->recipient_id == auth()->id())
                                 <!-- Incoming transaction -->
                                 <div class="transaction-icon credit">
                                     <i class="fas fa-arrow-down"></i>
                                 </div>
                                 <div class="transaction-details">
-                                    <span class="transaction-name">Terima dari {{ $transaction->sender->name }}</span>
+                                    <span class="transaction-name">Top Up Berhasil</span>
                                     <span class="transaction-amount amount-credit">
                                         +Rp {{ number_format($transaction->amount, 0, ',', '.') }}
                                     </span>

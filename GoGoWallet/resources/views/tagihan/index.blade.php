@@ -129,19 +129,35 @@
                                 </div>
                                 <div class="tagihan-amount">
                                     <span class="amount">Rp {{ number_format($tagihan->nominal_tagihan, 0, ',', '.') }}</span>
-                                    <span class="status {{ $tagihan->status_dibayar ? 'paid' : 'unpaid' }}">
-                                        {{ $tagihan->status_dibayar ? 'Sudah Dibayar' : 'Belum Dibayar' }}
+                                    <span class="status {{ $tagihan->status ?? 'unpaid' }}">
+                                        @if($tagihan->status === 'ditolak')
+                                            Ditolak
+                                        @elseif($tagihan->status_dibayar)
+                                            Sudah Dibayar
+                                        @else
+                                            Belum Dibayar
+                                        @endif
                                     </span>
                                 </div>
                             </div>
-                            @if (!$tagihan->status_dibayar)
-                                <form action="{{ route('tagihan.bayar', $tagihan->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="pay-button">
-                                        <span>Bayar Sekarang</span>
-                                        <i class="fas fa-arrow-right"></i>
-                                    </button>
-                                </form>
+                            @if (!$tagihan->status_dibayar && !isset($tagihan->status))
+                                <div class="action-buttons">
+                                    <form action="{{ route('tagihan.bayar', $tagihan->id) }}" method="POST" class="action-form">
+                                        @csrf
+                                        <button type="submit" class="pay-button">
+                                            <span>Bayar Sekarang</span>
+                                            <i class="fas fa-arrow-right"></i>
+                                        </button>
+                                    </form>
+                                    <form action="{{ route('tagihan.tolak', $tagihan->id) }}" method="POST" class="action-form">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="reject-button">
+                                            <span>Tolak</span>
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             @endif
                         </div>
                     @empty

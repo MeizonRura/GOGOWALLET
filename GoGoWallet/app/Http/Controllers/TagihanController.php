@@ -112,4 +112,23 @@ class TagihanController extends Controller
             ]);
         }
     }
+    
+    public function tolak($id)
+    {
+        $tagihan = Tagihan::findOrFail($id);
+        
+        // Verify this bill is for current user
+        if ($tagihan->nomor_rekening !== auth()->user()->account_number) {
+            return back()->withErrors(['general' => 'Tagihan ini bukan untuk Anda']);
+        }
+
+        // Update tagihan status to rejected instead of deleting
+        $tagihan->update([
+            'status_dibayar' => false,
+            'status' => 'ditolak'
+        ]);
+
+        return redirect()->route('tagihan.index')
+            ->with('success', 'Tagihan berhasil ditolak');
+    }
 }
