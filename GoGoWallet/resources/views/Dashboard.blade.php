@@ -110,12 +110,12 @@
 
 
             <!-- Loan -->
-            <div class="action-card">
+            <div class="action-card" onclick="window.location.href='{{ route('donations.index') }}'" style="cursor:pointer;">
                 <div class="action-icon loan-icon">
                     <i class="fas fa-hand-holding-usd text-2xl"></i>
                 </div>
-                <h3 class="action-title">Pinjaman</h3>
-                <p class="action-description">Pinjaman dana cepat</p>
+                <h3 class="action-title">Donasi</h3>
+                <p class="action-description">Kirim uang untuk donasi</p>
             </div>
         </div>
     </div>
