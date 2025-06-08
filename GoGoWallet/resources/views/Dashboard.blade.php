@@ -123,7 +123,7 @@
     <!-- Transaction List -->
     <div class="transactions">
         <h2 class="transactions-title">Transaksi Terakhir</h2>
-        @if(isset($transactions) && $transactions->isNotEmpty())
+        @if(count($transactions ?? []) > 0)
             <div class="transaction-list">
                 @foreach($transactions as $transaction)
                     <div class="transaction-item">
@@ -194,7 +194,6 @@
             {{ session('success') }}
         </div>
     @endif
-
 </main>
 </body>
 </html>
