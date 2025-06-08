@@ -8,6 +8,8 @@ use App\Http\Controllers\TopUpController;
 use App\Http\Controllers\ValasController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TagihanController;
+use App\Http\Controllers\DonationController;
+
 use Illuminate\Http\Request;
 
 
@@ -56,6 +58,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/tagihan/create', [TagihanController::class, 'create'])->name('tagihan.create');
     Route::post('/tagihan/store', [TagihanController::class, 'store'])->name('tagihan.store');
     Route::post('/tagihan/{id}/bayar', [TagihanController::class, 'bayar'])->name('tagihan.bayar');
+
+    //donasi routes
+    Route::get('/donasi', [DonationController::class, 'index'])
+    ->middleware('auth')
+    ->name('donations.index');
+    Route::post('/donasi', [DonationController::class, 'store'])
+    ->middleware('auth');
 });
 
 // API routes
