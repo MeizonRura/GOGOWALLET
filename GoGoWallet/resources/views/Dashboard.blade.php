@@ -110,12 +110,12 @@
 
 
             <!-- Loan -->
-            <div class="action-card">
+            <div class="action-card" onclick="window.location.href='{{ route('donations.index') }}'" style="cursor:pointer;">
                 <div class="action-icon loan-icon">
                     <i class="fas fa-hand-holding-usd text-2xl"></i>
                 </div>
-                <h3 class="action-title">Pinjaman</h3>
-                <p class="action-description">Pinjaman dana cepat</p>
+                <h3 class="action-title">Donasi</h3>
+                <p class="action-description">Kirim uang untuk donasi</p>
             </div>
         </div>
     </div>
@@ -151,6 +151,23 @@
                                     <span class="transaction-name">Top Up Berhasil</span>
                                     <span class="transaction-amount amount-credit">
                                         +Rp {{ number_format($transaction->amount, 0, ',', '.') }}
+                                     </span>
+                                    <span class="transaction-date">
+                                        {{ $transaction->created_at->locale('id')->isoFormat('D MMMM Y, HH:mm') }}
+                                    </span>
+                                    @if($transaction->note)
+                                        <span class="transaction-note">{{ $transaction->note }}</span>
+                                    @endif
+                                </div>    
+                            @elseif($transaction->type === 'donation')
+                                <!-- Donation transaction -->
+                                <div class="transaction-icon debit donation">
+                                    <i class="fas fa-hand-holding-heart"></i>
+                                </div>
+                                <div class="transaction-details">
+                                    <span class="transaction-name">Donasi ke {{ $transaction->note }}</span>
+                                    <span class="transaction-amount amount-debit">
+                                        -Rp {{ number_format($transaction->amount, 0, ',', '.') }}
                                     </span>
                                     <span class="transaction-date">
                                         {{ $transaction->created_at->locale('id')->isoFormat('D MMMM Y, HH:mm') }}
@@ -160,7 +177,7 @@
                                     @endif
                                 </div>
                             @elseif($transaction->recipient_id == auth()->id())
-                                <!-- Incoming transaction -->
+                                <!-- Other incoming transactions -->
                                 <div class="transaction-icon credit">
                                     <i class="fas fa-arrow-down"></i>
                                 </div>
