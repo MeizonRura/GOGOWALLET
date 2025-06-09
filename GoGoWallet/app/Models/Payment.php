@@ -17,6 +17,10 @@ class Payment extends Model
         'description'
     ];
 
+    protected $connection = 'pembayaran';
+    protected $table = 'pembayarans'; // sesuaikan dengan nama tabel
+    protected $guarded = [];
+
     public function user()
     {
         return $this->belongsTo(User::class);

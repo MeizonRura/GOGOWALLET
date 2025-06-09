@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\DB;
 
 class TransferController extends Controller
 {
+    public function index()
+    {
+        $transfers = Transaction::where('type', 'transfer')->get();
+        return view('transfer.index', compact('transfers'));
+    }
+
     public function show()
     {
         $user = Auth::user();

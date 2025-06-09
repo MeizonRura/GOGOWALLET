@@ -7,8 +7,91 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/users', 'UserController@index');           // Endpoint 1: List user
 Route::get('/users/{id}', 'UserController@show');       // Endpoint 2: Detail user
 Route::post('/users', 'UserController@store');          // Endpoint 3: Tambah user
 Route::put('/users/{id}', 'UserController@update');     // Endpoint 4: Update user
 Route::delete('/users/{id}', 'UserController@destroy'); // Endpoint 5: Hapus user
+
+// Guest routes (unprotected)
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login'); 
+    Route::post('/login', [AuthController::class, 'login']);
+});
+
+// Protected routes
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    
+    // Transfer routes
+    Route::get('/transfer', [TransferController::class, 'show'])->name('transfer');
+    Route::post('/transfer/process', [TransferController::class, 'process'])->name('transfer.process');
+    
+    // Top up routes
+    Route::get('/topup', [TopUpController::class, 'show'])->name('topup');
+    Route::post('/topup/process', [TopUpController::class, 'process'])->name('topup.process');
+    
+    // Transfer Valas routes
+    Route::get('/transfer-valas', [ValasController::class, 'index'])->name('transfer-valas.index');
+    Route::get('/transfer-valas/create', [ValasController::class, 'create'])->name('transfer-valas.create');
+    Route::post('/transfer-valas', [ValasController::class, 'store'])->name('transfer-valas.store');
+    
+    // Pembayaran routes
+    Route::get('/pembayaran/va', [PaymentController::class, 'vaForm'])->name('pembayaran.va');
+    Route::post('/pembayaran/check-va', [PaymentController::class, 'checkVa'])->name('pembayaran.checkVa'); // Add this line
+    Route::post('/pembayaran', [PaymentController::class, 'store'])->name('pembayaran.store');
+    Route::get('/pembayaran/sukses', function() {
+        return view('payment.sukses');
+    })->name('pembayaran.sukses');
+    Route::get('/pembayaran', [PaymentController::class, 'index'])->name('pembayaran.index');
+
+    // Tagihan routes
+    Route::get('/tagihan', [TagihanController::class, 'index'])->name('tagihan.index');
+    Route::get('/tagihan/create', [TagihanController::class, 'create'])->name('tagihan.create');
+    Route::post('/tagihan/store', [TagihanController::class, 'store'])->name('tagihan.store');
+    Route::post('/tagihan/{id}/bayar', [TagihanController::class, 'bayar'])->name('tagihan.bayar');
+    Route::delete('/tagihan/{id}/tolak', [TagihanController::class, 'tolak'])->name('tagihan.tolak');
+
+    //donasi routes
+    Route::get('/donasi', [DonationController::class, 'index'])
+    ->middleware('auth')
+    ->name('donations.index');
+    Route::post('/donasi', [DonationController::class, 'store'])
+    ->middleware('auth');
+});
+
+// API routes
+Route::get('/api/va-info', function(Request $request) {
+    $va = $request->query('va');
+    $data = [
+        '1234567890' => 150000,
+        '9876543210' => 250000,
+    ];
+    if (isset($data[$va])) {
+        return response()->json([
+            'success' => true,
+            'amount' => $data[$va]
+        ]);
+    }
+    return response()->json(['success' => false, 'message' => 'Virtual Account tidak ditemukan']);
+});
+
+Route::get('/transfer', [TransferController::class, 'index']);
+Route::post('/transfer', [TransferController::class, 'store']);
+
+Route::get('/valas', [ValasController::class, 'index']);
+Route::post('/valas', [ValasController::class, 'store']);
+
+Route::get('/pembayaran', [PaymentController::class, 'index']);
+Route::post('/pembayaran', [PaymentController::class, 'store']);
+
+Route::get('/donasi', [DonationController::class, 'index']);
+Route::post('/donasi', [DonationController::class, 'store']);
+
+Route::get('/tagihan', [TagihanController::class, 'index']);
+Route::post('/tagihan', [TagihanController::class, 'store']);
+

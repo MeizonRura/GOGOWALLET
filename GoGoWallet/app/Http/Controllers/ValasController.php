@@ -13,7 +13,8 @@ class ValasController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('transfer_valas.index', compact('user'));
+        $valas = TransferValas::all();
+        return view('transfer_valas.index', compact('user', 'valas'));
     }
 
     public function store(Request $request)
