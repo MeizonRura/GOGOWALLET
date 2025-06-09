@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   app:
     image: php:8.2-fpm
@@ -5,18 +7,29 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
-    ports:
-      - "8000:8000"
     env_file:
       - .env
+    expose:
+      - "9000"
     depends_on:
       - db_transfer
       - db_valas
       - db_pembayaran
       - db_donasi
       - db_tagihan
-    command: >
-      sh -c "docker-php-ext-install pdo pdo_mysql && php-fpm"
+    command: php-fpm
+
+
+  nginx:
+    image: nginx:alpine
+    container_name: gogowallet_nginx
+    ports:
+      - "8010:80"
+    volumes:
+      - ./:/var/www/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
 
   db_transfer:
     image: mysql:8
@@ -77,17 +90,6 @@ services:
       - "3311:3306"
     volumes:
       - dbdata_tagihan:/var/lib/mysql
-
-  nginx:
-    image: nginx:alpine
-    container_name: gogowallet_nginx
-    ports:
-      - "8010:80"
-    volumes:
-      - ./:/var/www/html
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - app
 
 volumes:
   dbdata_transfer:
