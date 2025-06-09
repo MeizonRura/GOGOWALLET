@@ -142,8 +142,22 @@
                                         {{ $transaction->created_at->locale('id')->isoFormat('D MMMM Y, HH:mm') }}
                                     </span>
                                 </div>
+                            @elseif($transaction->type === 'donation')
+                                <!-- Donation transaction -->
+                                <div class="transaction-icon debit donation">
+                                    <i class="fas fa-hand-holding-heart"></i>
+                                </div>
+                                <div class="transaction-details">
+                                    <span class="transaction-name">Donasi ke {{ $transaction->note }}</span>
+                                    <span class="transaction-amount amount-debit">
+                                        -Rp {{ number_format($transaction->amount, 0, ',', '.') }}
+                                    </span>
+                                    <span class="transaction-date">
+                                        {{ $transaction->created_at->locale('id')->isoFormat('D MMMM Y, HH:mm') }}
+                                    </span>
+                                </div>
                             @elseif($transaction->recipient_id == auth()->id())
-                                <!-- Incoming transaction -->
+                                <!-- Other incoming transactions -->
                                 <div class="transaction-icon credit">
                                     <i class="fas fa-arrow-down"></i>
                                 </div>

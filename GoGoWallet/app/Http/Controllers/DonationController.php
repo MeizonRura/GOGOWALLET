@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Donation;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 
 class DonationController extends Controller
@@ -39,6 +40,16 @@ class DonationController extends Controller
             'amount' => $request->amount,
         ]);
 
-        return back()->with('success', 'Donasi berhasil!');
+        Transaction::create([
+            'sender_id' => $user->id,
+            'recipient_id' => $user->id,
+            'amount' => $request->amount,
+            'type' => 'donation',
+            'note' => $request->rekening_tujuan, // This will show "Bencana Alam" or "Dompet Yatim"
+            'status' => 'success'
+        ]);
+
+        return redirect()->route('dashboard')
+                ->with('success', 'Donasi berhasil dilakukan');
     }
 }
