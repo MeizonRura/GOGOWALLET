@@ -15,4 +15,8 @@ class Donation extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected $connection = 'donasi';
+    protected $table = 'donasis'; // sesuaikan dengan nama tabel
+    protected $guarded = [];
 }

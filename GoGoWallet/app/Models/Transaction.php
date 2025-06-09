@@ -15,6 +15,10 @@ class Transaction extends Model
         'status'
     ];
 
+    protected $connection = 'mysql'; // default (transfer)
+    protected $table = 'transactions'; // sesuaikan dengan nama tabel
+    protected $guarded = [];
+
     public function sender()
     {
         return $this->belongsTo(User::class, 'sender_id');

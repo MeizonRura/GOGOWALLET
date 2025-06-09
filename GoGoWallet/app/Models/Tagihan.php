@@ -19,4 +19,8 @@ class Tagihan extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected $connection = 'tagihan';
+    protected $table = 'tagihans'; // sesuaikan dengan nama tabel
+    protected $guarded = [];
 }

@@ -18,6 +18,9 @@ class TransferValas extends Model
         'amount_valas'
     ];
 
+    protected $connection = 'valas';
+    protected $guarded = [];
+
     public function user()
     {
         return $this->belongsTo(User::class);

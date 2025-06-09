@@ -83,3 +83,18 @@ Route::get('/api/va-info', function(Request $request) {
     }
     return response()->json(['success' => false, 'message' => 'Virtual Account tidak ditemukan']);
 });
+
+Route::get('/transfer', [TransferController::class, 'index']);
+Route::post('/transfer', [TransferController::class, 'store']);
+
+Route::get('/valas', [ValasController::class, 'index']);
+Route::post('/valas', [ValasController::class, 'store']);
+
+Route::get('/pembayaran', [PaymentController::class, 'index']);
+Route::post('/pembayaran', [PaymentController::class, 'store']);
+
+Route::get('/donasi', [DonationController::class, 'index']);
+Route::post('/donasi', [DonationController::class, 'store']);
+
+Route::get('/tagihan', [TagihanController::class, 'index']);
+Route::post('/tagihan', [TagihanController::class, 'store']);
